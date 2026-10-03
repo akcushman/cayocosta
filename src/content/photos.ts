@@ -30,9 +30,7 @@ export type Photo = {
   exposure: string | null;
 };
 
-export const PHOTOS: Photo[] = ORDER.map((slug) => ({
-  slug,
-  src: `/photos/${slug}.jpg`,
-  thumb: `/photos/${slug}-thumb.jpg`,
-  ...generated[slug],
-}));
+export const PHOTOS: Photo[] = ORDER.map((slug) => {
+  const { files, ...meta } = generated[slug];
+  return { slug, src: files.main, thumb: files["-thumb"], ...meta };
+});

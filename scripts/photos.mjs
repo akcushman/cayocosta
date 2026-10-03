@@ -3,6 +3,9 @@
 //   node scripts/photos.mjs            # every set
 //   node scripts/photos.mjs host       # just one set
 //
+// File names carry a content hash (headshot-3f9a2c.jpg), so an edited photo
+// gets a new URL and no browser or CDN can serve the old one.
+//
 // Sets live in scripts/photos.config.json; a photo is "file" or
 // { file, focus: [x, y] } to centre a crop on a point (fractions of the
 // width and height). Each becomes <out>/<slug>.jpg (2000px, or a fixed
@@ -13,7 +16,8 @@
 // copies; the originals are never modified.
 
 import { execFileSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
 import exifReader from "exif-reader";
@@ -28,6 +32,7 @@ async function processSet(name, set) {
   const source = set.source.replace(/^~/, homedir());
   const out = join(root, set.out);
   mkdirSync(out, { recursive: true });
+  for (const f of readdirSync(out)) rmSync(join(out, f));
   const manifest = {};
 
   for (const [slug, entry] of Object.entries(set.photos)) {
@@ -64,7 +69,15 @@ async function processSet(name, set) {
 
     // Apply the EXIF orientation first; metadata is dropped on output.
     const { data: upright, info } = await sharp(input).rotate().toBuffer({ resolveWithObject: true });
-    const jpeg = (img, quality) => img.jpeg({ quality, mozjpeg: true });
+    const files = {};
+    // Encode, then save as <slug><suffix>-<hash>.jpg.
+    const save = async (img, quality, suffix = "") => {
+      const { data, info } = await img.jpeg({ quality, mozjpeg: true }).toBuffer({ resolveWithObject: true });
+      const name = `${slug}${suffix}-${createHash("sha1").update(data).digest("hex").slice(0, 8)}.jpg`;
+      writeFileSync(join(out, name), data);
+      files[suffix || "main"] = `/${set.out.replace(/^public\//, "")}/${name}`;
+      return { ...info, size: data.length };
+    };
 
     let full;
     if (set.crop) {
@@ -82,20 +95,14 @@ async function processSet(name, set) {
           height: ch,
         });
       }
-      full = await jpeg(img.resize({ width: w, height: h, fit: "cover", position: sharp.strategy.attention }), 78).toFile(
-        join(out, `${slug}.jpg`),
-      );
-      await jpeg(sharp(upright).resize(1600, 1600, { fit: "inside", withoutEnlargement: true }), 80).toFile(
-        join(out, `${slug}-full.jpg`),
-      );
+      full = await save(img.resize({ width: w, height: h, fit: "cover", position: sharp.strategy.attention }), 78);
+      await save(sharp(upright).resize(1600, 1600, { fit: "inside", withoutEnlargement: true }), 80, "-full");
     } else {
-      full = await jpeg(sharp(upright).resize(2000, 2000, { fit: "inside", withoutEnlargement: true }), 78).toFile(
-        join(out, `${slug}.jpg`),
-      );
-      await jpeg(sharp(upright).resize(480, 480, { fit: "inside" }), 70).toFile(join(out, `${slug}-thumb.jpg`));
+      full = await save(sharp(upright).resize(2000, 2000, { fit: "inside", withoutEnlargement: true }), 78);
+      await save(sharp(upright).resize(480, 480, { fit: "inside" }), 70, "-thumb");
     }
 
-    manifest[slug] = { width: full.width, height: full.height, camera, exposure };
+    manifest[slug] = { files, width: full.width, height: full.height, camera, exposure };
     console.log(`${name}/${slug}: ${full.width}×${full.height} ${(full.size / 1024).toFixed(0)}KB ${camera ?? ""} ${exposure ?? ""}`);
   }
 

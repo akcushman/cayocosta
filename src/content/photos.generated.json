@@ -1,71 +1,119 @@
 {
   "pelicans-at-dusk": {
+    "files": {
+      "main": "/photos/pelicans-at-dusk-45597fec.jpg",
+      "-thumb": "/photos/pelicans-at-dusk-thumb-4b88aaed.jpg"
+    },
     "width": 2000,
     "height": 1333,
     "camera": "Canon EOS 80D",
     "exposure": "163mm · f/5.6 · 1/320s · ISO 640"
   },
   "brown-pelican": {
+    "files": {
+      "main": "/photos/brown-pelican-62610707.jpg",
+      "-thumb": "/photos/brown-pelican-thumb-88c9a646.jpg"
+    },
     "width": 1333,
     "height": 2000,
     "camera": "Canon EOS 80D",
     "exposure": "218mm · f/6.3 · 1/320s · ISO 200"
   },
   "great-blue-heron": {
+    "files": {
+      "main": "/photos/great-blue-heron-76cc90cf.jpg",
+      "-thumb": "/photos/great-blue-heron-thumb-40d5e43e.jpg"
+    },
     "width": 1333,
     "height": 2000,
     "camera": "Canon EOS 80D",
     "exposure": "250mm · f/5.6 · 1/320s · ISO 250"
   },
   "sailboat-sunset": {
+    "files": {
+      "main": "/photos/sailboat-sunset-cefdb6a3.jpg",
+      "-thumb": "/photos/sailboat-sunset-thumb-76be4e39.jpg"
+    },
     "width": 2000,
     "height": 1333,
     "camera": "Canon EOS 80D",
     "exposure": "183mm · f/6.3 · 1/400s · ISO 100"
   },
   "gulls-shoreline": {
+    "files": {
+      "main": "/photos/gulls-shoreline-6c40fa48.jpg",
+      "-thumb": "/photos/gulls-shoreline-thumb-ff41a85d.jpg"
+    },
     "width": 2000,
     "height": 1333,
     "camera": "Canon EOS 80D",
     "exposure": "55mm · f/9 · 1/400s · ISO 100"
   },
   "golden-gate": {
+    "files": {
+      "main": "/photos/golden-gate-cc490a2d.jpg",
+      "-thumb": "/photos/golden-gate-thumb-2fdff3cb.jpg"
+    },
     "width": 1333,
     "height": 2000,
     "camera": "Canon EOS 80D",
     "exposure": "55mm · f/7.1 · 1/250s · ISO 100"
   },
   "japanese-garden": {
+    "files": {
+      "main": "/photos/japanese-garden-b6e3bf65.jpg",
+      "-thumb": "/photos/japanese-garden-thumb-cfc9103b.jpg"
+    },
     "width": 1500,
     "height": 2000,
     "camera": "iPhone 16 Pro",
     "exposure": "7mm · f/1.8 · 1/670s · ISO 100"
   },
   "lake-and-mountains": {
+    "files": {
+      "main": "/photos/lake-and-mountains-f5dadfde.jpg",
+      "-thumb": "/photos/lake-and-mountains-thumb-0d90bbe4.jpg"
+    },
     "width": 2000,
     "height": 1333,
     "camera": "Canon PowerShot G7 X Mark II",
     "exposure": "23mm · f/5.6 · 1/1250s · ISO 125"
   },
   "snowy-peaks": {
+    "files": {
+      "main": "/photos/snowy-peaks-04dd5763.jpg",
+      "-thumb": "/photos/snowy-peaks-thumb-9b19da4c.jpg"
+    },
     "width": 2000,
     "height": 1333,
     "camera": "Canon EOS 80D",
     "exposure": "55mm · f/9 · 1/250s · ISO 100"
   },
   "peacock": {
+    "files": {
+      "main": "/photos/peacock-6e77f6a5.jpg",
+      "-thumb": "/photos/peacock-thumb-724314fc.jpg"
+    },
     "width": 2000,
     "height": 1333,
     "camera": "Canon EOS 80D",
     "exposure": "233mm · f/5.6 · 1/320s · ISO 1600"
   },
   "grey-parrot": {
+    "files": {
+      "main": "/photos/grey-parrot-93964066.jpg",
+      "-thumb": "/photos/grey-parrot-thumb-d02b097f.jpg"
+    },
     "width": 2000,
     "height": 1333,
     "camera": "Canon EOS 80D",
     "exposure": "250mm · f/5.6 · 1/320s · ISO 1250"
   },
   "bee-on-goldenrod": {
+    "files": {
+      "main": "/photos/bee-on-goldenrod-6014c8a0.jpg",
+      "-thumb": "/photos/bee-on-goldenrod-thumb-a912d9a3.jpg"
+    },
     "width": 2000,
     "height": 1333,
     "camera": "Canon EOS 80D",

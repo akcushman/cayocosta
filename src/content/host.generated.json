@@ -1,47 +1,79 @@
 {
   "headshot": {
+    "files": {
+      "main": "/host/headshot-3df7e829.jpg",
+      "-full": "/host/headshot-full-74b8acc1.jpg"
+    },
     "width": 480,
     "height": 600,
     "camera": "Canon EOS 80D",
     "exposure": "135mm · f/5.6 · 1/200s · ISO 250"
   },
   "corgi": {
+    "files": {
+      "main": "/host/corgi-ad5cf388.jpg",
+      "-full": "/host/corgi-full-51513152.jpg"
+    },
     "width": 480,
     "height": 600,
     "camera": "iPhone 17 Pro",
     "exposure": "7mm · f/1.8 · 1/121s · ISO 100"
   },
   "doorway": {
+    "files": {
+      "main": "/host/doorway-e58b61f5.jpg",
+      "-full": "/host/doorway-full-4b5f1229.jpg"
+    },
     "width": 480,
     "height": 600,
     "camera": "iPhone 17 Pro",
     "exposure": "7mm · f/1.8 · 1/73s · ISO 100"
   },
   "japan": {
+    "files": {
+      "main": "/host/japan-824f62f2.jpg",
+      "-full": "/host/japan-full-fce887c5.jpg"
+    },
     "width": 480,
     "height": 600,
     "camera": "iPhone 15 Pro",
     "exposure": "7mm · f/1.8 · 1/4300s · ISO 80"
   },
   "harbor": {
+    "files": {
+      "main": "/host/harbor-333048e6.jpg",
+      "-full": "/host/harbor-full-05eb34b8.jpg"
+    },
     "width": 480,
     "height": 600,
     "camera": null,
     "exposure": null
   },
   "aquarium": {
+    "files": {
+      "main": "/host/aquarium-983f1acc.jpg",
+      "-full": "/host/aquarium-full-620c48cd.jpg"
+    },
     "width": 480,
     "height": 600,
     "camera": "iPhone 15 Pro",
     "exposure": "7mm · f/1.8 · 1/60s · ISO 640"
   },
   "leaves": {
+    "files": {
+      "main": "/host/leaves-a1dd2441.jpg",
+      "-full": "/host/leaves-full-44331172.jpg"
+    },
     "width": 480,
     "height": 600,
     "camera": null,
     "exposure": null
   },
   "red-robe": {
+    "files": {
+      "main": "/host/red-robe-4958b5ab.jpg",
+      "-full": "/host/red-robe-full-7f79ed1b.jpg"
+    },
     "width": 480,
     "height": 600,
     "camera": null,
