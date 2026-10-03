@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { HOST_PHOTOS } from "@/content/host";
+import { TAPES } from "@/content/host";
 import { ROLES } from "@/lib/channels";
 import styles from "./HelloScreen.module.css";
 
@@ -13,7 +13,7 @@ export default function HelloScreen() {
   const [host, setHost] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => setHost((h) => (h + 1) % HOST_PHOTOS.length), HOST_MS);
+    const id = setInterval(() => setHost((h) => (h + 1) % TAPES.length), HOST_MS);
     return () => clearInterval(id);
   }, []);
 
@@ -42,12 +42,12 @@ export default function HelloScreen() {
 
       {/* Picture-in-picture of the host, flipping through home video. */}
       <figure className={styles.host}>
-        <figcaption className={styles.hostTag}>Your host</figcaption>
+        <figcaption className={styles.hostTag}>Your host ▶</figcaption>
         <div className={styles.hostFrame}>
           <Image
             key={host}
             className={styles.hostPhoto}
-            src={HOST_PHOTOS[host]}
+            src={TAPES[host].crop}
             alt={host === 0 ? "AK Cushman" : ""}
             fill
             sizes="200px"

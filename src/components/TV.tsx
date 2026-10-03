@@ -29,7 +29,7 @@ export default function TV({ tv }: { tv: TVState }) {
           <div className={styles.bezel}>
             <div
               className={styles.screen}
-              data-clickable={phase === "warming" || (phase === "on" && !channel.home)}
+              data-clickable={phase === "warming" || phase === "on"}
               onClick={phase === "warming" ? tv.skipWarmup : tv.watch}
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
@@ -69,9 +69,11 @@ export default function TV({ tv }: { tv: TVState }) {
         {isTuned && (
           <>
             <span className={styles.pointerOnly}>
-              ▲ ▼ change channel{!channel.home && " · enter to watch"}
+              ▲ ▼ change channel · enter {channel.home ? "for home videos" : "to watch"}
             </span>
-            <span className={styles.touchOnly}>swipe to flip{!channel.home && " · tap to watch"}</span>
+            <span className={styles.touchOnly}>
+              swipe to flip · tap {channel.home ? "for home videos" : "to watch"}
+            </span>
           </>
         )}
       </p>

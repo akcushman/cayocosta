@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, VT323, Zilla_Slab } from "next/font/google";
+import { Geist, Permanent_Marker, VT323, Zilla_Slab } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,6 +19,12 @@ const slab = Zilla_Slab({
   subsets: ["latin"],
 });
 
+const marker = Permanent_Marker({
+  variable: "--font-marker",
+  weight: "400",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "Cayo Costa",
   description: "Now broadcasting.",
@@ -30,7 +36,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${vt323.variable} ${slab.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${vt323.variable} ${slab.variable} ${marker.variable}`}>
       <body>{children}</body>
     </html>
   );

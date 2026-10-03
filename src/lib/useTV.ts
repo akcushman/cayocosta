@@ -115,8 +115,8 @@ export function useTV() {
   }, [flashOsd]);
 
   const watch = useCallback(() => {
-    if (phase === "on" && !channel.home) setWatching(true);
-  }, [phase, channel.home]);
+    if (phase === "on") setWatching(true);
+  }, [phase]);
 
   const closeWatch = useCallback(() => setWatching(false), []);
 

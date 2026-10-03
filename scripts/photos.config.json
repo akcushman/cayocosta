@@ -24,10 +24,10 @@
     "manifest": "src/content/host.generated.json",
     "crop": [480, 600],
     "photos": {
-      "headshot": "16FC0CFB-D6C1-4263-9A36-F4ACF4120C2D.JPG",
+      "headshot": { "file": "16FC0CFB-D6C1-4263-9A36-F4ACF4120C2D.JPG", "focus": [0.43, 0.5] },
       "corgi": "E0C69587-EB43-4D96-8422-A5BD41E7DAE0.JPG",
       "doorway": "91BCF1A8-D144-47B6-8802-1EF513846385.HEIC",
-      "japan": { "file": "BA64E390-C344-4FE7-93C8-BCB553D14309.JPG", "position": "right" },
+      "japan": { "file": "BA64E390-C344-4FE7-93C8-BCB553D14309.JPG", "focus": [0.65, 0.5] },
       "harbor": "212C78B7-BC3C-437B-BEA1-57ECEAA23A17.HEIC",
       "aquarium": "67686A77-D956-4DC5-9D86-BC2D88158E26.JPG",
       "leaves": "08C0A505-AC27-4E9D-8E1A-0ADCCAC8948B.PNG",

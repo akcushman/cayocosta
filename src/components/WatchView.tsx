@@ -4,6 +4,7 @@ import type { Playlist } from "@/lib/spotify";
 import type { Post } from "@/lib/substack";
 import { pad } from "./Picture";
 import BuildingShow from "./shows/BuildingShow";
+import HomeVideoShow from "./shows/HomeVideoShow";
 import InterestsShow from "./shows/InterestsShow";
 import OnAirShow from "./shows/OnAirShow";
 import PhotographyShow from "./shows/PhotographyShow";
@@ -16,6 +17,7 @@ export type Programming = { posts: Post[]; playlist: Playlist | null };
 // Each channel airs its own kind of show. Channels without one yet fall
 // back to a "coming soon" card.
 const SHOWS: Record<string, ComponentType<Programming>> = {
+  hello: HomeVideoShow,
   building: BuildingShow,
   writing: WritingShow,
   interests: InterestsShow,

@@ -4,10 +4,11 @@
 //   node scripts/photos.mjs host       # just one set
 //
 // Sets live in scripts/photos.config.json; a photo is "file" or
-// { file, position } to frame a crop by hand ("right", "top"…). Each becomes
-// <out>/<slug>.jpg (2000px, or a fixed `crop` framed on the subject) plus
-// <slug>-thumb.jpg (480px), and size, year and camera are written to the
-// set's manifest. All metadata, GPS included, is stripped from the web
+// { file, focus: [x, y] } to centre a crop on a point (fractions of the
+// width and height). Each becomes <out>/<slug>.jpg (2000px, or a fixed
+// `crop` framed on the subject; crop sets also get an uncropped
+// <slug>-full.jpg) plus <slug>-thumb.jpg (480px), and size, year and camera
+// are written to the set's manifest. All metadata, GPS included, is stripped from the web
 // copies; the originals are never modified.
 
 import { execFileSync } from "node:child_process";
@@ -28,7 +29,7 @@ async function processSet(name, set) {
   const manifest = {};
 
   for (const [slug, entry] of Object.entries(set.photos)) {
-    const { file, position } = typeof entry === "string" ? { file: entry } : entry;
+    const { file, focus } = typeof entry === "string" ? { file: entry } : entry;
     let input = join(source, file);
 
     // sharp can't read HEIC; macOS sips can convert it.
@@ -47,21 +48,37 @@ async function processSet(name, set) {
     const year = years.length ? String(Math.min(...years)) : null;
     const camera = exifText.match(/(Canon [\w ]+?|iPhone [\w ]+?)\0/)?.[1]?.trim() ?? null;
 
-    // .rotate() applies the EXIF orientation before metadata is dropped.
-    const resize = set.crop
-      ? { width: set.crop[0], height: set.crop[1], fit: "cover", position: position ?? sharp.strategy.attention }
-      : { width: 2000, height: 2000, fit: "inside", withoutEnlargement: true };
-    const full = await sharp(input)
-      .rotate()
-      .resize(resize)
-      .jpeg({ quality: 78, mozjpeg: true })
-      .toFile(join(out, `${slug}.jpg`));
-    if (!set.crop) {
-      await sharp(input)
-        .rotate()
-        .resize(480, 480, { fit: "inside" })
-        .jpeg({ quality: 70, mozjpeg: true })
-        .toFile(join(out, `${slug}-thumb.jpg`));
+    // Apply the EXIF orientation first; metadata is dropped on output.
+    const { data: upright, info } = await sharp(input).rotate().toBuffer({ resolveWithObject: true });
+    const jpeg = (img, quality) => img.jpeg({ quality, mozjpeg: true });
+
+    let full;
+    if (set.crop) {
+      const [w, h] = set.crop;
+      let img = sharp(upright);
+      if (focus) {
+        // Largest box of the crop's shape, centred on the focus point.
+        const cw = Math.round(Math.min(info.width, (info.height * w) / h));
+        const ch = Math.round((cw * h) / w);
+        const clamp = (v, max) => Math.round(Math.min(Math.max(v, 0), max));
+        img = img.extract({
+          left: clamp(focus[0] * info.width - cw / 2, info.width - cw),
+          top: clamp(focus[1] * info.height - ch / 2, info.height - ch),
+          width: cw,
+          height: ch,
+        });
+      }
+      full = await jpeg(img.resize({ width: w, height: h, fit: "cover", position: sharp.strategy.attention }), 78).toFile(
+        join(out, `${slug}.jpg`),
+      );
+      await jpeg(sharp(upright).resize(1600, 1600, { fit: "inside", withoutEnlargement: true }), 80).toFile(
+        join(out, `${slug}-full.jpg`),
+      );
+    } else {
+      full = await jpeg(sharp(upright).resize(2000, 2000, { fit: "inside", withoutEnlargement: true }), 78).toFile(
+        join(out, `${slug}.jpg`),
+      );
+      await jpeg(sharp(upright).resize(480, 480, { fit: "inside" }), 70).toFile(join(out, `${slug}-thumb.jpg`));
     }
 
     manifest[slug] = { width: full.width, height: full.height, year, camera };
