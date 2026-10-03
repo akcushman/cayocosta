@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Permanent_Marker, VT323, Zilla_Slab } from "next/font/google";
+import { Cormorant_Garamond, Geist, Permanent_Marker, VT323, Zilla_Slab } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,6 +16,13 @@ const vt323 = VT323({
 const slab = Zilla_Slab({
   variable: "--font-slab",
   weight: "700",
+  subsets: ["latin"],
+});
+
+const serif = Cormorant_Garamond({
+  variable: "--font-serif",
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
 });
 
@@ -45,7 +52,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${vt323.variable} ${slab.variable} ${marker.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${vt323.variable} ${slab.variable} ${marker.variable} ${serif.variable}`}>
       <body>{children}</body>
     </html>
   );

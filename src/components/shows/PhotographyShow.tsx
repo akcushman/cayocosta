@@ -6,9 +6,10 @@ import { PHOTOS } from "@/content/photos";
 import MusicCredit from "../MusicCredit";
 import styles from "./PhotographyShow.module.css";
 
-// CH 05: a 90s nature documentary. A title card, then letterboxed shots
-// that dissolve into each other with slow pans, a camera readout in the
-// corner and a film strip. The controls get out of the way while you watch.
+// CH 05: a nature documentary, styled as an expedition's plates. A title
+// card, then letterboxed shots with slow pans; each is a numbered plate
+// with field notes (camera and exposure, never a description). The
+// controls get out of the way while you watch.
 
 const HOLD_MS = 7000;
 const INTRO_MS = 1800;
@@ -18,6 +19,7 @@ const AUTO_FADE_MS = 1000;
 const IDLE_MS = 2500;
 
 const wrap = (i: number) => (i + PHOTOS.length) % PHOTOS.length;
+const plate = (i: number) => String(i + 1).padStart(2, "0");
 
 export default function PhotographyShow() {
   const [shot, setShot] = useState<{ index: number; prev: number | null; manual: boolean }>({
@@ -121,13 +123,23 @@ export default function PhotographyShow() {
         </div>
 
         <div className={styles.vignette} aria-hidden />
-        <div className={styles.bug}>AK · NATURE</div>
-        {(photo.camera || photo.exposure) && (
-          <div className={styles.readout} key={`r-${photo.slug}`}>
-            {photo.camera && <p className={styles.camera}>{photo.camera}</p>}
-            {photo.exposure && <p className={styles.exposure}>{photo.exposure}</p>}
-          </div>
-        )}
+        <div className={styles.bug}>
+          <span className={styles.bugRule} aria-hidden />
+          AK Nature
+        </div>
+        <div className={styles.plate} key={`plate-${photo.slug}`}>
+          <p className={styles.plateHead}>
+            <span>Plate {plate(index)}</span>
+            <span className={styles.plateRule} aria-hidden />
+          </p>
+          {(photo.camera || photo.exposure) && (
+            <>
+              <p className={styles.notesLabel}>Field notes</p>
+              {photo.camera && <p className={styles.camera}>{photo.camera}</p>}
+              {photo.exposure && <p className={styles.exposure}>{photo.exposure}</p>}
+            </>
+          )}
+        </div>
         {playing && !intro && <div className={styles.progress} key={`p-${photo.slug}`} />}
 
         {intro && (
@@ -150,7 +162,7 @@ export default function PhotographyShow() {
             ▶▶
           </button>
           <span className={styles.counter}>
-            {String(index + 1).padStart(2, "0")} / {String(PHOTOS.length).padStart(2, "0")}
+            Plate {plate(index)} of {plate(PHOTOS.length - 1)}
           </span>
         </div>
 
@@ -161,7 +173,7 @@ export default function PhotographyShow() {
                 className={styles.frameThumb}
                 data-active={i === index}
                 onClick={() => go(i)}
-                aria-label={`Photo ${i + 1}`}
+                aria-label={`Plate ${i + 1}`}
               >
                 <Image src={p.thumb} alt="" width={160} height={107} />
               </button>

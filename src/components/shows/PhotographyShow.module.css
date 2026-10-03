@@ -1,4 +1,6 @@
 .show {
+  --gold: #e8b923;
+
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -61,46 +63,96 @@
   to { transform: scale(1) translateX(0); }
 }
 
-/* Station watermark, top right. */
+/* Our own gold mark, top right: a rule and the name. */
 .bug {
   position: absolute;
   top: 5%;
   right: 4%;
-  font-size: clamp(9px, 1.1vw, 13px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(9px, 1vw, 12px);
   font-weight: 700;
-  letter-spacing: 0.3em;
-  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
-/* Camera readout, like the data strip on a documentary camera. */
-.readout {
-  position: absolute;
-  left: 5%;
-  bottom: 8%;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-  animation: readoutIn 7s ease-out both;
+.bugRule {
+  width: clamp(18px, 2.4vw, 32px);
+  height: 2px;
+  background: var(--gold);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-@keyframes readoutIn {
-  0%, 12% { opacity: 0; transform: translateY(6px); }
-  22%, 88% { opacity: 1; transform: none; }
-  100% { opacity: 0.85; }
+/* The plate: number, gold rule, and field notes like an expedition log. */
+.plate {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: 7%;
+  max-width: 460px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+  animation: plateIn 7s ease-out both;
+}
+
+@keyframes plateIn {
+  0%, 6% { opacity: 0; transform: translateY(6px); }
+  14%, 90% { opacity: 1; transform: none; }
+  100% { opacity: 0.9; }
+}
+
+.plateHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(10px, 1.05vw, 12px);
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.plateRule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  transform-origin: left;
+  animation: drawRule 1.2s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes drawRule {
+  from { transform: scaleX(0); }
+}
+
+.notesLabel {
+  margin-top: 10px;
+  font-size: clamp(8px, 0.85vw, 10px);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.65;
 }
 
 .camera {
-  font-size: clamp(10px, 1.1vw, 13px);
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  margin-top: 2px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(20px, 2.4vw, 30px);
+  font-weight: 600;
+  font-style: italic;
+  font-variant-numeric: lining-nums;
+  line-height: 1.1;
 }
 
 .exposure {
   margin-top: 4px;
-  font-family: var(--font-vt323), monospace;
-  font-size: clamp(16px, 1.8vw, 22px);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(14px, 1.45vw, 18px);
+  font-weight: 500;
   letter-spacing: 0.06em;
-  color: #ffd27a;
+  font-variant-numeric: lining-nums;
+  opacity: 0.9;
 }
 
 /* Off-screen neighbours, loaded but never painted. */
@@ -227,10 +279,12 @@
 }
 
 .counter {
-  margin-left: 8px;
-  font-family: var(--font-vt323), monospace;
-  font-size: 20px;
-  opacity: 0.7;
+  margin-left: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
 }
 
 /* Film strip: sprocket holes top and bottom. */
@@ -272,7 +326,7 @@
 }
 
 .frameThumb[data-active="true"] {
-  outline: 2px solid #f2c230;
+  outline: 2px solid var(--gold);
   outline-offset: 1px;
 }
 
@@ -295,7 +349,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .photo,
-  .readout,
+  .plate,
+  .plateRule,
   .shot {
     animation: none;
   }
