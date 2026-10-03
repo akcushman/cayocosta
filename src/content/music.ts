@@ -48,7 +48,7 @@ const TRACKS = {
   },
   satie: {
     src: "/music/satie-gymnopedie-1.mp3",
-    gain: 1.16,
+    gain: 1,
     piece: "Satie — Gymnopédie No. 1",
     performer: "Teknopazzo",
     license: "CC0",
@@ -56,7 +56,7 @@ const TRACKS = {
   },
   chopin: {
     src: "/music/chopin-nocturne-op9-2.mp3",
-    gain: 1.0,
+    gain: 0.75,
     piece: "Chopin — Nocturne in E-flat major, Op. 9 No. 2",
     performer: "Peter Johnston (Musopen)",
     license: "CC0",
