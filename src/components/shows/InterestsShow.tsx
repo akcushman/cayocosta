@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { EMAIL } from "@/content/contact";
-import { INTERESTS } from "@/content/interests";
+import { INTERESTS, type Interest } from "@/content/interests";
 import styles from "./InterestsShow.module.css";
 
 // CH 04: a game-show board. Every interest on one board, and a spin
 // that lands on today's topic.
 
-const BYO = "& yours?";
-const TILES = [...INTERESTS, BYO];
+const BYO: Interest = { name: "& yours?" };
+const TILES: Interest[] = [...INTERESTS, BYO];
 
 export default function InterestsShow() {
   const [lit, setLit] = useState<number | null>(null);
@@ -42,6 +42,12 @@ export default function InterestsShow() {
     hop();
   };
 
+  const pick = (i: number) => {
+    clearTimeout(timer.current);
+    setLit(i);
+    setPicked(i);
+  };
+
   const topic = picked === null ? null : TILES[picked];
 
   return (
@@ -58,14 +64,17 @@ export default function InterestsShow() {
       <div className={styles.marquee}>
         <ul className={styles.board}>
           {TILES.map((t, i) => (
-            <li
-              key={t}
-              className={styles.tile}
-              data-lit={lit === i}
-              data-picked={picked === i}
-              data-byo={t === BYO}
-            >
-              <span>{t}</span>
+            <li key={t.name}>
+              <button
+                className={styles.tile}
+                data-lit={lit === i}
+                data-picked={picked === i}
+                data-byo={t === BYO}
+                onClick={() => pick(i)}
+              >
+                <span>{t.name}</span>
+                {t.watch && <span className={styles.tv} aria-label="has a show to watch">📺</span>}
+              </button>
             </li>
           ))}
         </ul>
@@ -80,11 +89,16 @@ export default function InterestsShow() {
           {topic === BYO && "Bring your own topic. I'm all ears."}
           {topic !== null && topic !== BYO && (
             <>
-              Today&rsquo;s topic: <strong>{topic}</strong>. Let&rsquo;s talk.
+              Today&rsquo;s topic: <strong>{topic.name}</strong>. Let&rsquo;s talk.
             </>
           )}
         </p>
-        <a className={styles.mail} href={`mailto:${EMAIL}${topic && topic !== BYO ? `?subject=${encodeURIComponent(topic)}` : ""}`}>
+        {topic?.watch && (
+          <a className={styles.watch} href={topic.watch.href} target="_blank" rel="noreferrer">
+            📺 {topic.watch.label} ↗
+          </a>
+        )}
+        <a className={styles.mail} href={`mailto:${EMAIL}${topic && topic !== BYO ? `?subject=${encodeURIComponent(topic.name)}` : ""}`}>
           {EMAIL}
         </a>
       </div>

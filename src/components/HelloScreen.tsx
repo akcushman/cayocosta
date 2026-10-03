@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { TAPES } from "@/content/host";
+import { CURRENTLY } from "@/content/now";
 import { ROLES } from "@/lib/channels";
 import styles from "./HelloScreen.module.css";
 
@@ -17,12 +18,20 @@ export default function HelloScreen() {
     return () => clearInterval(id);
   }, []);
 
-  // Rendered twice so the crawl loops without a gap.
+  // Who I am, then a NOW segment. Rendered twice so the crawl loops
+  // without a gap.
   const crawl = [0, 1].map((copy) => (
     <span key={copy} className={styles.crawlRun} aria-hidden={copy === 1}>
       {ROLES.map((role) => (
         <span key={role} className={styles.crawlItem}>
           {role}
+          <span className={styles.crawlSep}>◆</span>
+        </span>
+      ))}
+      <span className={styles.crawlNow}>Now</span>
+      {CURRENTLY.map((item) => (
+        <span key={item} className={styles.crawlItem}>
+          {item}
           <span className={styles.crawlSep}>◆</span>
         </span>
       ))}

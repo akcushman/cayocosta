@@ -143,12 +143,23 @@
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  animation: crawl 22s linear infinite;
+  animation: crawl 34s linear infinite;
 }
 
 .crawlItem {
   white-space: nowrap;
   padding-left: 1.2em;
+}
+
+.crawlNow {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  margin-left: 1.2em;
+  padding: 0 0.7em;
+  white-space: nowrap;
+  color: #fff;
+  background: #c0392b;
 }
 
 .crawlSep {

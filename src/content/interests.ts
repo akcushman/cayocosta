@@ -1,18 +1,27 @@
 // CH 04 · Interests — the game-show board. Things I love to talk about.
+// A `watch` link shows up when the board lands on (or you pick) that tile.
 
-export const INTERESTS = [
-  "Aliens",
-  "Computers",
-  "Consumer branding & marketing",
-  "Technology acceleration",
-  "Why human labor gets more valuable",
-  "National defense",
-  "Space exploration",
-  "Consciousness",
-  "Media, as a whole",
-  "Relationships & bonds",
-  "AI as a healthcare companion",
-  "Protecting the mangroves",
-  "Orca whales",
-  "Jazz",
+export type Interest = { name: string; watch?: { label: string; href: string } };
+
+export const INTERESTS: Interest[] = [
+  {
+    name: "Aliens",
+    watch: { label: "Watch The X-Files", href: "https://pluto.tv/us/shows/the-x-files/" },
+  },
+  {
+    name: "Computers",
+    watch: { label: "Watch The Computer Chronicles", href: "https://www.youtube.com/@ComputerChroniclesYT" },
+  },
+  { name: "Consumer branding & marketing" },
+  { name: "Technology acceleration" },
+  { name: "Why human labor gets more valuable" },
+  { name: "National defense" },
+  { name: "Tinned fish" },
+  { name: "Consciousness" },
+  { name: "Media, as a whole" },
+  { name: "Relationships & bonds" },
+  { name: "AI as a healthcare companion" },
+  { name: "Protecting the mangroves" },
+  { name: "Orca whales" },
+  { name: "Jazz" },
 ];
