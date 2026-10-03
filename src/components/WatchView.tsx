@@ -1,19 +1,29 @@
 import type { ComponentType } from "react";
 import type { Channel } from "@/lib/channels";
+import type { Post } from "@/lib/substack";
 import { pad } from "./Picture";
 import BuildingShow from "./shows/BuildingShow";
 import InterestsShow from "./shows/InterestsShow";
+import PhotographyShow from "./shows/PhotographyShow";
+import WritingShow from "./shows/WritingShow";
 import styles from "./WatchView.module.css";
+
+/** Data fetched on the server for shows that need it. */
+export type Programming = { posts: Post[] };
 
 // Each channel airs its own kind of show. Channels without one yet fall
 // back to a "coming soon" card.
-const SHOWS: Record<string, ComponentType> = {
+const SHOWS: Record<string, ComponentType<Programming>> = {
   building: BuildingShow,
+  writing: WritingShow,
   interests: InterestsShow,
+  photography: PhotographyShow,
 };
 
 // A channel opened full screen.
-export default function WatchView({ channel, onClose }: { channel: Channel; onClose: () => void }) {
+type Props = { channel: Channel; programming: Programming; onClose: () => void };
+
+export default function WatchView({ channel, programming, onClose }: Props) {
   const Show = SHOWS[channel.slug];
 
   return (
@@ -22,7 +32,7 @@ export default function WatchView({ channel, onClose }: { channel: Channel; onCl
         ← back to TV <kbd>esc</kbd>
       </button>
       {Show ? (
-        <Show />
+        <Show {...programming} />
       ) : (
         <div className={styles.body}>
           <div className={styles.channel}>CH {pad(channel.number)}</div>

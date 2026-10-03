@@ -1,0 +1,179 @@
+/* Teletext: eight colours, one blocky font, black everywhere else. */
+
+.show {
+  --red: #ff2b2b;
+  --green: #2bff4a;
+  --yellow: #fff22b;
+  --blue: #2b3bff;
+  --magenta: #ff2bff;
+  --cyan: #2bffff;
+  --white: #ffffff;
+
+  min-height: 100%;
+  padding: 72px 16px 120px;
+  background: #000;
+  font-family: var(--font-vt323), monospace;
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.25;
+  color: var(--white);
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.25);
+}
+
+.screen {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.2ch;
+  font-size: 1em;
+}
+
+.header span:nth-child(4) {
+  margin-left: auto;
+}
+
+.mosaic {
+  display: grid;
+  grid-template-columns: repeat(40, 1fr);
+  height: 0.9em;
+  margin: 0.4em 0 0.8em;
+}
+
+.r { background: var(--red); }
+.y { background: var(--yellow); }
+.g { background: var(--green); }
+.c { background: var(--cyan); }
+.b { background: var(--blue); }
+.m { background: var(--magenta); }
+
+.mosaic span:nth-child(odd) {
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+
+.banner {
+  padding: 0.2em 0.6em;
+  overflow: hidden;
+}
+
+.banner[data-color="blue"] { background: var(--blue); }
+.banner[data-color="red"] { background: var(--red); }
+
+/* Teletext double height: glyphs twice as tall, same width. Set at 2x and
+   squeezed back horizontally, so long titles still wrap like 1x text. */
+.double {
+  width: 200%;
+  font-size: 2em;
+  font-weight: 400;
+  line-height: 1;
+  transform: scaleX(0.5);
+  transform-origin: left;
+  color: var(--yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.banner[data-color="red"] .double {
+  color: var(--white);
+}
+
+.white { color: var(--white); }
+.yellow { color: var(--yellow); }
+.cyan { color: var(--cyan); }
+.green { color: var(--green); }
+.red { color: var(--red); }
+
+.index {
+  list-style: none;
+  margin: 0.4em 0;
+}
+
+.index button {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  gap: 0.6ch;
+  padding: 0.1em 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.index button:hover span:first-child {
+  background: var(--blue);
+}
+
+.leader {
+  flex: 1;
+  min-width: 2ch;
+  border-bottom: 2px dotted rgba(255, 255, 255, 0.4);
+  transform: translateY(-0.25em);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  margin-top: 0.4em;
+  max-width: 40em;
+}
+
+.continue {
+  align-self: flex-start;
+  margin-top: 0.4em;
+  color: var(--cyan);
+  animation: blink 1.2s steps(1) infinite;
+}
+
+@keyframes blink {
+  60% { opacity: 0; }
+}
+
+/* ---------- Fastext ---------- */
+
+.fastext {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #000;
+}
+
+.fastext > * {
+  padding: 14px 8px;
+  border: 0;
+  font: inherit;
+  font-size: clamp(18px, 2.2vw, 24px);
+  text-align: center;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+}
+
+.fastext [data-color="red"] { background: var(--red); }
+.fastext [data-color="green"] { background: var(--green); }
+.fastext [data-color="yellow"] { background: var(--yellow); }
+.fastext [data-color="cyan"] { background: var(--cyan); }
+
+.fastext > *:active {
+  filter: brightness(0.8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .continue {
+    animation: none;
+  }
+}

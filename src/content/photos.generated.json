@@ -1,0 +1,74 @@
+{
+  "pelicans-at-dusk": {
+    "width": 2000,
+    "height": 1333,
+    "year": "2016",
+    "camera": "Canon EOS 80D"
+  },
+  "brown-pelican": {
+    "width": 1333,
+    "height": 2000,
+    "year": "2016",
+    "camera": "Canon EOS 80D"
+  },
+  "great-blue-heron": {
+    "width": 1333,
+    "height": 2000,
+    "year": "2018",
+    "camera": "Canon EOS 80D"
+  },
+  "sailboat-sunset": {
+    "width": 2000,
+    "height": 1333,
+    "year": "2016",
+    "camera": "Canon EOS 80D"
+  },
+  "gulls-shoreline": {
+    "width": 2000,
+    "height": 1333,
+    "year": "2018",
+    "camera": "Canon EOS 80D"
+  },
+  "golden-gate": {
+    "width": 1333,
+    "height": 2000,
+    "year": "2018",
+    "camera": "Canon EOS 80D"
+  },
+  "japanese-garden": {
+    "width": 1500,
+    "height": 2000,
+    "year": "2026",
+    "camera": "iPhone 16 Pro"
+  },
+  "lake-and-mountains": {
+    "width": 2000,
+    "height": 1333,
+    "year": "2022",
+    "camera": "Canon PowerShot G7 X Mark II"
+  },
+  "snowy-peaks": {
+    "width": 2000,
+    "height": 1333,
+    "year": "2021",
+    "camera": "Canon EOS 80D"
+  },
+  "peacock": {
+    "width": 2000,
+    "height": 1333,
+    "year": "2018",
+    "camera": "Canon EOS 80D"
+  },
+  "grey-parrot": {
+    "width": 2000,
+    "height": 1333,
+    "year": "2016",
+    "camera": "Canon EOS 80D"
+  },
+  "bee-on-goldenrod": {
+    "width": 2000,
+    "height": 1333,
+    "year": "2017",
+    "camera": "Canon EOS 80D"
+  }
+}

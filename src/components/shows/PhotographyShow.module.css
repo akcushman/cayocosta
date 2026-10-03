@@ -1,0 +1,197 @@
+.show {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 72px 16px 32px;
+  background: #000;
+  color: #f2efe8;
+}
+
+/* Widescreen, letterboxed on whatever's left. */
+.frame {
+  position: relative;
+  width: min(100%, calc((100dvh - 260px) * 16 / 9));
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+}
+
+.shot {
+  position: absolute;
+  inset: 0;
+  animation: fadeIn 1.2s ease-out both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+}
+
+/* Portrait shots sit on a blurred wash of themselves, like broadcast. */
+.backdrop {
+  object-fit: cover;
+  filter: blur(28px) brightness(0.45) saturate(1.2);
+  transform: scale(1.2);
+}
+
+.photo {
+  object-fit: contain;
+  animation: panLeft 9s ease-out both;
+}
+
+.shot[data-pan="right"] .photo {
+  animation-name: panRight;
+}
+
+@keyframes panLeft {
+  from { transform: scale(1) translateX(0); }
+  to { transform: scale(1.08) translateX(-1.5%); }
+}
+
+@keyframes panRight {
+  from { transform: scale(1.08) translateX(-1.5%); }
+  to { transform: scale(1) translateX(0); }
+}
+
+/* Station watermark, top right. */
+.bug {
+  position: absolute;
+  top: 5%;
+  right: 4%;
+  font-size: clamp(9px, 1.1vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: rgba(255, 255, 255, 0.55);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.caption {
+  position: absolute;
+  left: 5%;
+  bottom: 8%;
+  max-width: 70%;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  animation: captionIn 7s ease-out both;
+}
+
+@keyframes captionIn {
+  0%, 8% { opacity: 0; transform: translateY(6px); }
+  18%, 85% { opacity: 1; transform: none; }
+  100% { opacity: 0.85; }
+}
+
+.meta {
+  font-size: clamp(10px, 1.1vw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  transform-origin: left;
+  animation: progress 7s linear both;
+}
+
+@keyframes progress {
+  from { transform: scaleX(0); }
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controls button {
+  min-width: 44px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: #111;
+  color: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  background: #1d1d1d;
+}
+
+.counter {
+  margin-left: 8px;
+  font-family: var(--font-vt323), monospace;
+  font-size: 20px;
+  opacity: 0.7;
+}
+
+/* Film strip: sprocket holes top and bottom. */
+.strip {
+  list-style: none;
+  display: flex;
+  gap: 6px;
+  max-width: 100%;
+  padding: 14px 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background:
+    radial-gradient(circle, #000 2.5px, transparent 3px) 0 3px / 14px 10px repeat-x,
+    radial-gradient(circle, #000 2.5px, transparent 3px) 0 calc(100% - 3px) / 14px 10px repeat-x,
+    #1a1612;
+  border-radius: 3px;
+}
+
+.frameThumb {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.2s;
+}
+
+.frameThumb img {
+  display: block;
+  width: 84px;
+  height: 56px;
+  object-fit: cover;
+}
+
+.frameThumb:hover,
+.frameThumb[data-active="true"] {
+  opacity: 1;
+}
+
+.frameThumb[data-active="true"] {
+  outline: 2px solid #f2c230;
+  outline-offset: 1px;
+}
+
+@media (max-width: 700px) {
+  .frame {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+  }
+
+  .frameThumb img {
+    width: 64px;
+    height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo,
+  .caption {
+    animation: none;
+  }
+}

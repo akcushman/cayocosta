@@ -41,7 +41,7 @@ export const CHANNELS: Channel[] = [
     number: 3,
     slug: "writing",
     title: "Writing",
-    tagline: "Essays, notes & late-night thoughts",
+    tagline: "Writings about life, technology & business",
     color: "linear-gradient(160deg, #4a3b12 0%, #140f03 100%)",
   },
   {
