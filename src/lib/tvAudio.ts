@@ -13,8 +13,11 @@ export class TVAudio {
   private muted = false;
   private music: HTMLAudioElement | null = null;
   private musicGain: GainNode | null = null;
-  private queue: string[] = [];
+  private queue: { src: string; gain: number }[] = [];
   private queueKey = "";
+  /** Current fade level (0–1) and the playing track's loudness boost. */
+  private musicLevel = 0;
+  private trackGain = 1;
 
   init() {
     if (this.ctx) {
@@ -70,37 +73,45 @@ export class TVAudio {
     void music.play().catch(() => {});
   }
 
-  /** Switch to a channel's score (list of URLs); [] fades to silence. */
-  setMusic(urls: string[]) {
-    const key = urls.join("|");
+  /** Switch to a channel's score; [] fades to silence. */
+  setMusic(tracks: { src: string; gain: number }[]) {
+    const key = tracks.map((t) => t.src).join("|");
     if (key === this.queueKey) return;
     this.queueKey = key;
-    this.queue = urls;
-    this.fadeMusic(0, 150);
-    if (!urls.length || !this.music) {
+    this.queue = tracks;
+    if (!tracks.length || !this.music) {
+      this.fadeMusic(0, 150);
       this.music?.pause();
       return;
     }
-    this.music.src = urls[0];
-    void this.music.play().catch(() => {});
+    this.play(0);
     this.fadeMusic(1, 900);
+  }
+
+  private play(i: number) {
+    if (!this.music) return;
+    const track = this.queue[i];
+    this.trackGain = track.gain;
+    this.music.src = track.src;
+    void this.music.play().catch(() => {});
+    this.fadeMusic(this.musicLevel, 50);
   }
 
   private next() {
     if (!this.music || !this.queue.length) return;
-    const i = this.queue.indexOf(new URL(this.music.src).pathname);
-    this.music.src = this.queue[(i + 1) % this.queue.length];
-    void this.music.play().catch(() => {});
+    const i = this.queue.findIndex((t) => t.src === new URL(this.music!.src).pathname);
+    this.play((i + 1) % this.queue.length);
   }
 
-  /** Music sits under everything; level is 0–1 of its normal mix. */
+  /** Fade the score to `level` (0–1) over `ms`. */
   fadeMusic(level: number, ms = 300) {
+    this.musicLevel = level;
     if (!this.ctx || !this.musicGain) return;
     const now = this.ctx.currentTime;
     const g = this.musicGain.gain;
     g.cancelScheduledValues(now);
     g.setValueAtTime(g.value, now);
-    g.linearRampToValueAtTime(level * 0.35, now + ms / 1000);
+    g.linearRampToValueAtTime(level * this.trackGain, now + ms / 1000);
   }
 
   setMuted(muted: boolean) {

@@ -4,6 +4,9 @@
 
 export type Track = {
   src: string;
+  /** Playback boost so every track lands near the same loudness (~-18 dB
+   *  RMS), capped so peaks stay under full scale. Measured, not guessed. */
+  gain: number;
   piece: string;
   performer: string;
   license: string;
@@ -13,6 +16,7 @@ export type Track = {
 const TRACKS = {
   bachPrelude: {
     src: "/music/bach-cello-prelude.mp3",
+    gain: 2.12,
     piece: "Bach — Cello Suite No. 1, Prelude",
     performer: "John Michel, cello",
     license: "CC BY-SA 3.0",
@@ -20,6 +24,7 @@ const TRACKS = {
   },
   vivaldiWinter: {
     src: "/music/vivaldi-winter-largo.mp3",
+    gain: 4.28,
     piece: "Vivaldi — The Four Seasons, Winter: Largo",
     performer: "The Modena Chamber Orchestra (Musopen)",
     license: "Public domain",
@@ -27,6 +32,7 @@ const TRACKS = {
   },
   bachSarabande: {
     src: "/music/bach-cello-sarabande.mp3",
+    gain: 2.35,
     piece: "Bach — Cello Suite No. 1, Sarabande",
     performer: "John Michel, cello",
     license: "CC BY-SA 3.0",
@@ -34,6 +40,7 @@ const TRACKS = {
   },
   vivaldiSpring: {
     src: "/music/vivaldi-spring-largo.mp3",
+    gain: 3.25,
     piece: "Vivaldi — The Four Seasons, Spring: Largo",
     performer: "The Modena Chamber Orchestra (Musopen)",
     license: "Public domain",
@@ -41,6 +48,7 @@ const TRACKS = {
   },
   satie: {
     src: "/music/satie-gymnopedie-1.mp3",
+    gain: 1.16,
     piece: "Satie — Gymnopédie No. 1",
     performer: "Teknopazzo",
     license: "CC0",
@@ -48,6 +56,7 @@ const TRACKS = {
   },
   chopin: {
     src: "/music/chopin-nocturne-op9-2.mp3",
+    gain: 1.0,
     piece: "Chopin — Nocturne in E-flat major, Op. 9 No. 2",
     performer: "Peter Johnston (Musopen)",
     license: "CC0",

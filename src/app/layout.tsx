@@ -25,25 +25,18 @@ const marker = Permanent_Marker({
   subsets: ["latin"],
 });
 
-const DESCRIPTION =
-  "hello, i'm autumnkyoko. thanks for tuning in. Founder, technology lover, optimist, pro-humanist and U.S. Navy veteran. This is an analog of my life.";
-
+// Shared links stay small: just "AK" and the crest.
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.akcushman.tech"),
   title: "AK Cushman",
-  description: DESCRIPTION,
   openGraph: {
-    title: "AK Cushman · Now broadcasting",
-    description: DESCRIPTION,
+    title: "AK",
+    siteName: "AK",
     url: "/",
-    siteName: "AK Cushman",
     type: "website",
+    images: [{ url: "/ak.png", width: 256, height: 256, alt: "AK" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "AK Cushman · Now broadcasting",
-    description: DESCRIPTION,
-  },
+  twitter: { card: "summary", title: "AK", images: ["/ak.png"] },
 };
 
 export const viewport: Viewport = {

@@ -135,7 +135,7 @@ export function useTV() {
   // static, warm-up or a dial drag); flipping away switches the score.
   const settled = phase === "on" && noise === 0;
   useEffect(() => {
-    if (settled) audio.current?.setMusic(CHANNEL_MUSIC[channel.slug]?.map((t) => t.src) ?? []);
+    if (settled) audio.current?.setMusic(CHANNEL_MUSIC[channel.slug] ?? []);
   }, [settled, channel.slug]);
 
   const setVolume = useCallback((v: number) => {
