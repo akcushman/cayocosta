@@ -7,6 +7,11 @@ export class TVAudio {
   private hissGain: GainNode | null = null;
   private master: GainNode | null = null;
   private volume = 0.8;
+  private muted = false;
+  private music: HTMLAudioElement | null = null;
+  private musicGain: GainNode | null = null;
+  private queue: string[] = [];
+  private queueKey = "";
 
   init() {
     if (this.ctx) {
@@ -18,7 +23,7 @@ export class TVAudio {
 
     // Everything routes through one master gain for the volume control.
     const master = ctx.createGain();
-    master.gain.value = this.volume;
+    master.gain.value = this.muted ? 0 : this.volume;
     master.connect(ctx.destination);
     this.master = master;
 
@@ -45,11 +50,66 @@ export class TVAudio {
 
     source.connect(highpass).connect(lowpass).connect(gain).connect(master);
     source.start();
+
+    // Channel music: one <audio> element, routed through the same master.
+    const music = new Audio();
+    music.preload = "auto";
+    music.addEventListener("ended", () => this.next());
+    const musicGain = ctx.createGain();
+    musicGain.gain.value = 0;
+    ctx.createMediaElementSource(music).connect(musicGain).connect(master);
+    this.music = music;
+    this.musicGain = musicGain;
+    // iOS only lets an element play later if it first played in a tap.
+    music.muted = true;
+    void music.play().catch(() => {}).finally(() => {
+      music.pause();
+      music.muted = false;
+    });
+  }
+
+  /** Switch to a channel's score (list of URLs); [] fades to silence. */
+  setMusic(urls: string[]) {
+    const key = urls.join("|");
+    if (key === this.queueKey) return;
+    this.queueKey = key;
+    this.queue = urls;
+    this.fadeMusic(0, 150);
+    if (!urls.length || !this.music) {
+      this.music?.pause();
+      return;
+    }
+    this.music.src = urls[0];
+    void this.music.play().catch(() => {});
+    this.fadeMusic(1, 900);
+  }
+
+  private next() {
+    if (!this.music || !this.queue.length) return;
+    const i = this.queue.indexOf(new URL(this.music.src).pathname);
+    this.music.src = this.queue[(i + 1) % this.queue.length];
+    void this.music.play().catch(() => {});
+  }
+
+  /** Music sits under everything; level is 0–1 of its normal mix. */
+  fadeMusic(level: number, ms = 300) {
+    if (!this.ctx || !this.musicGain) return;
+    const now = this.ctx.currentTime;
+    const g = this.musicGain.gain;
+    g.cancelScheduledValues(now);
+    g.setValueAtTime(g.value, now);
+    g.linearRampToValueAtTime(level * 0.35, now + ms / 1000);
+  }
+
+  setMuted(muted: boolean) {
+    this.muted = muted;
+    this.setVolume(this.volume);
   }
 
   setVolume(v: number) {
     this.volume = v;
-    if (this.ctx && this.master) this.master.gain.setTargetAtTime(v, this.ctx.currentTime, 0.03);
+    const level = this.muted ? 0 : v;
+    if (this.ctx && this.master) this.master.gain.setTargetAtTime(level, this.ctx.currentTime, 0.03);
   }
 
   /** Ramp the static hiss to `level` (0–1) over `ms`. */
@@ -109,6 +169,7 @@ export class TVAudio {
 
   powerOff() {
     this.hiss(0, 40);
+    this.setMusic([]);
     if (!this.ctx) return;
     const ctx = this.ctx;
     const now = ctx.currentTime;

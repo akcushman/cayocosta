@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { EMAIL, LINKEDIN } from "@/content/contact";
 import { EDUCATION, LISTINGS } from "@/content/story";
+import MusicCredit from "../MusicCredit";
 import styles from "./BuildingShow.module.css";
 
 // CH 02: a 90s cable channel guide. One row per channel (chapter) with its
@@ -76,6 +77,7 @@ export default function BuildingShow() {
             <b>Full credits</b> LinkedIn ↗
           </a>
         </footer>
+        <MusicCredit channel="building" className={styles.music} />
       </div>
     </div>
   );

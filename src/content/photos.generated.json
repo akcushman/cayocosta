@@ -2,73 +2,73 @@
   "pelicans-at-dusk": {
     "width": 2000,
     "height": 1333,
-    "year": "2016",
-    "camera": "Canon EOS 80D"
+    "camera": "Canon EOS 80D",
+    "exposure": "163mm · f/5.6 · 1/320s · ISO 640"
   },
   "brown-pelican": {
     "width": 1333,
     "height": 2000,
-    "year": "2016",
-    "camera": "Canon EOS 80D"
+    "camera": "Canon EOS 80D",
+    "exposure": "218mm · f/6.3 · 1/320s · ISO 200"
   },
   "great-blue-heron": {
     "width": 1333,
     "height": 2000,
-    "year": "2018",
-    "camera": "Canon EOS 80D"
+    "camera": "Canon EOS 80D",
+    "exposure": "250mm · f/5.6 · 1/320s · ISO 250"
   },
   "sailboat-sunset": {
     "width": 2000,
     "height": 1333,
-    "year": "2016",
-    "camera": "Canon EOS 80D"
+    "camera": "Canon EOS 80D",
+    "exposure": "183mm · f/6.3 · 1/400s · ISO 100"
   },
   "gulls-shoreline": {
     "width": 2000,
     "height": 1333,
-    "year": "2018",
-    "camera": "Canon EOS 80D"
+    "camera": "Canon EOS 80D",
+    "exposure": "55mm · f/9 · 1/400s · ISO 100"
   },
   "golden-gate": {
     "width": 1333,
     "height": 2000,
-    "year": "2018",
-    "camera": "Canon EOS 80D"
+    "camera": "Canon EOS 80D",
+    "exposure": "55mm · f/7.1 · 1/250s · ISO 100"
   },
   "japanese-garden": {
     "width": 1500,
     "height": 2000,
-    "year": "2026",
-    "camera": "iPhone 16 Pro"
+    "camera": "iPhone 16 Pro",
+    "exposure": "7mm · f/1.8 · 1/670s · ISO 100"
   },
   "lake-and-mountains": {
     "width": 2000,
     "height": 1333,
-    "year": "2022",
-    "camera": "Canon PowerShot G7 X Mark II"
+    "camera": "Canon PowerShot G7 X Mark II",
+    "exposure": "23mm · f/5.6 · 1/1250s · ISO 125"
   },
   "snowy-peaks": {
     "width": 2000,
     "height": 1333,
-    "year": "2021",
-    "camera": "Canon EOS 80D"
+    "camera": "Canon EOS 80D",
+    "exposure": "55mm · f/9 · 1/250s · ISO 100"
   },
   "peacock": {
     "width": 2000,
     "height": 1333,
-    "year": "2018",
-    "camera": "Canon EOS 80D"
+    "camera": "Canon EOS 80D",
+    "exposure": "233mm · f/5.6 · 1/320s · ISO 1600"
   },
   "grey-parrot": {
     "width": 2000,
     "height": 1333,
-    "year": "2016",
-    "camera": "Canon EOS 80D"
+    "camera": "Canon EOS 80D",
+    "exposure": "250mm · f/5.6 · 1/320s · ISO 1250"
   },
   "bee-on-goldenrod": {
     "width": 2000,
     "height": 1333,
-    "year": "2017",
-    "camera": "Canon EOS 80D"
+    "camera": "Canon EOS 80D",
+    "exposure": "250mm · f/6.3 · 1/320s · ISO 400"
   }
 }

@@ -22,10 +22,15 @@
 .shot {
   position: absolute;
   inset: 0;
-  animation: fadeIn 1.2s ease-out both;
+  animation: dissolve 1.6s ease-in-out both;
 }
 
-@keyframes fadeIn {
+/* The outgoing shot holds still beneath the dissolve. */
+.shot[data-under] {
+  animation: none;
+}
+
+@keyframes dissolve {
   from { opacity: 0; }
 }
 
@@ -67,27 +72,86 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
-.caption {
+/* Camera readout, like the data strip on a documentary camera. */
+.readout {
   position: absolute;
   left: 5%;
   bottom: 8%;
-  max-width: 70%;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-  animation: captionIn 7s ease-out both;
+  animation: readoutIn 7s ease-out both;
 }
 
-@keyframes captionIn {
-  0%, 8% { opacity: 0; transform: translateY(6px); }
-  18%, 85% { opacity: 1; transform: none; }
+@keyframes readoutIn {
+  0%, 12% { opacity: 0; transform: translateY(6px); }
+  22%, 88% { opacity: 1; transform: none; }
   100% { opacity: 0.85; }
 }
 
-.meta {
+.camera {
   font-size: clamp(10px, 1.1vw, 13px);
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  font-weight: 700;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  opacity: 0.8;
+}
+
+.exposure {
+  margin-top: 4px;
+  font-family: var(--font-vt323), monospace;
+  font-size: clamp(16px, 1.8vw, 22px);
+  letter-spacing: 0.06em;
+  color: #ffd27a;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+/* ---------- Title card ---------- */
+
+.titleCard {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #000;
+  cursor: pointer;
+  animation: titleCard 3.2s ease-in-out both;
+}
+
+@keyframes titleCard {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.presents {
+  font-size: clamp(10px, 1.2vw, 14px);
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeUp 1s 0.3s ease-out forwards;
+}
+
+.filmTitle {
+  font-family: var(--font-slab), Georgia, serif;
+  font-size: clamp(34px, 6vw, 76px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  opacity: 0;
+  animation: fadeUp 1.2s 0.9s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
 }
 
 .progress {
@@ -103,6 +167,30 @@
 
 @keyframes progress {
   from { transform: scaleX(0); }
+}
+
+/* Everything under the picture; fades in cinema mode. */
+.chrome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 100%;
+  transition: opacity 0.6s;
+}
+
+.show[data-idle="true"] {
+  cursor: none;
+}
+
+.show[data-idle="true"] .chrome {
+  opacity: 0.08;
+}
+
+.music {
+  justify-content: center;
+  max-width: 900px;
+  text-align: center;
 }
 
 .controls {
@@ -191,7 +279,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .photo,
-  .caption {
+  .readout,
+  .shot {
     animation: none;
   }
 }

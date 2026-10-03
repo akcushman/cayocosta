@@ -43,14 +43,56 @@
   cursor: pointer;
 }
 
-.back kbd {
+.sound {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  padding: 8px 14px;
+  font-family: var(--font-vt323), monospace;
+  font-size: 20px;
+  color: inherit;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sound[aria-pressed="true"] {
+  opacity: 0.6;
+}
+
+.back kbd,
+.sound kbd {
   margin-left: 8px;
   opacity: 0.6;
   font-family: inherit;
 }
 
 @media (hover: none) {
-  .back kbd {
+  .sound {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  padding: 8px 14px;
+  font-family: var(--font-vt323), monospace;
+  font-size: 20px;
+  color: inherit;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sound[aria-pressed="true"] {
+  opacity: 0.6;
+}
+
+.back kbd,
+.sound kbd {
     display: none;
   }
 }

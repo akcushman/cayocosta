@@ -129,10 +129,6 @@
   font-size: 16px;
 }
 
-.labelYear {
-  font-size: 14px;
-  color: #b3261e;
-}
 
 /* ---------- Playback ---------- */
 
@@ -230,7 +226,7 @@
   left: 5%;
 }
 
-/* Camcorder date stamp. */
+/* Where a camcorder would stamp the date. */
 .osdDate {
   bottom: 5%;
   right: 5%;

@@ -32,7 +32,6 @@ export default function HomeVideoShow() {
               <span className={styles.stripes} aria-hidden />
               <span className={styles.label}>
                 <span className={styles.labelTitle}>AK · tape {pad(i + 1)}</span>
-                {t.year && <span className={styles.labelYear}>{t.year}</span>}
               </span>
             </button>
           </li>
@@ -80,7 +79,7 @@ function Player({ index, onChange, onStop }: { index: number; onChange: (i: numb
         <Image
           className={styles.footage}
           src={tape.full}
-          alt={`Photo of AK Cushman${tape.year ? `, ${tape.year}` : ""}`}
+          alt="Photo of AK Cushman"
           fill
           sizes="100vw"
           priority
@@ -91,7 +90,7 @@ function Player({ index, onChange, onStop }: { index: number; onChange: (i: numb
         <p className={`${styles.osd} ${styles.osdPlay}`}>PLAY ▶</p>
         <p className={`${styles.osd} ${styles.osdSp}`}>SP</p>
         <p className={`${styles.osd} ${styles.osdCounter}`}>{counter}</p>
-        {tape.year && <p className={`${styles.osd} ${styles.osdDate}`}>{tape.year}</p>}
+        <p className={`${styles.osd} ${styles.osdDate}`}>AK</p>
       </div>
 
       <div className={styles.deck}>

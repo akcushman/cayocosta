@@ -7,14 +7,16 @@
 // { file, focus: [x, y] } to centre a crop on a point (fractions of the
 // width and height). Each becomes <out>/<slug>.jpg (2000px, or a fixed
 // `crop` framed on the subject; crop sets also get an uncropped
-// <slug>-full.jpg) plus <slug>-thumb.jpg (480px), and size, year and camera
-// are written to the set's manifest. All metadata, GPS included, is stripped from the web
+// <slug>-full.jpg) plus <slug>-thumb.jpg (480px), and size, camera and
+// exposure are written to the set's manifest. (No dates: camera clocks
+// and edit histories make them unreliable.) All metadata, GPS included, is stripped from the web
 // copies; the originals are never modified.
 
 import { execFileSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
+import exifReader from "exif-reader";
 import sharp from "sharp";
 
 const root = new URL("..", import.meta.url).pathname;
@@ -42,11 +44,23 @@ async function processSet(name, set) {
     }
 
     const { exif } = await sharp(input).metadata();
-    const exifText = exif ? exif.toString("latin1") : "";
-    // EXIF holds several dates (taken, edited…); the earliest is when it was shot.
-    const years = [...exifText.matchAll(/(\d{4}):\d{2}:\d{2} \d{2}:\d{2}:\d{2}/g)].map((m) => Number(m[1]));
-    const year = years.length ? String(Math.min(...years)) : null;
-    const camera = exifText.match(/(Canon [\w ]+?|iPhone [\w ]+?)\0/)?.[1]?.trim() ?? null;
+    const { Image: image = {}, Photo: photo = {} } = exif ? exifReader(exif) : {};
+    const camera = image.Model ? String(image.Model).trim() : null;
+    // e.g. "218mm · f/6.3 · 1/320s · ISO 200"
+    const shutter = photo.ExposureTime
+      ? photo.ExposureTime >= 1
+        ? `${photo.ExposureTime}s`
+        : `1/${Math.round(1 / photo.ExposureTime)}s`
+      : null;
+    const exposure =
+      [
+        photo.FocalLength && `${Math.round(photo.FocalLength)}mm`,
+        photo.FNumber && `f/${Number(photo.FNumber.toFixed(1))}`,
+        shutter,
+        photo.ISOSpeedRatings && `ISO ${photo.ISOSpeedRatings}`,
+      ]
+        .filter(Boolean)
+        .join(" · ") || null;
 
     // Apply the EXIF orientation first; metadata is dropped on output.
     const { data: upright, info } = await sharp(input).rotate().toBuffer({ resolveWithObject: true });
@@ -81,8 +95,8 @@ async function processSet(name, set) {
       await jpeg(sharp(upright).resize(480, 480, { fit: "inside" }), 70).toFile(join(out, `${slug}-thumb.jpg`));
     }
 
-    manifest[slug] = { width: full.width, height: full.height, year, camera };
-    console.log(`${name}/${slug}: ${full.width}×${full.height} ${(full.size / 1024).toFixed(0)}KB ${year ?? ""} ${camera ?? ""}`);
+    manifest[slug] = { width: full.width, height: full.height, camera, exposure };
+    console.log(`${name}/${slug}: ${full.width}×${full.height} ${(full.size / 1024).toFixed(0)}KB ${camera ?? ""} ${exposure ?? ""}`);
   }
 
   writeFileSync(join(root, set.manifest), JSON.stringify(manifest, null, 2) + "\n");

@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import type { Channel } from "@/lib/channels";
 import type { Playlist } from "@/lib/spotify";
 import type { Post } from "@/lib/substack";
+import { CHANNEL_MUSIC } from "@/content/music";
 import { pad } from "./Picture";
 import BuildingShow from "./shows/BuildingShow";
 import HomeVideoShow from "./shows/HomeVideoShow";
@@ -26,16 +27,28 @@ const SHOWS: Record<string, ComponentType<Programming>> = {
 };
 
 // A channel opened full screen.
-type Props = { channel: Channel; programming: Programming; onClose: () => void };
+type Props = {
+  channel: Channel;
+  programming: Programming;
+  muted: boolean;
+  onToggleMute: () => void;
+  onClose: () => void;
+};
 
-export default function WatchView({ channel, programming, onClose }: Props) {
+export default function WatchView({ channel, programming, muted, onToggleMute, onClose }: Props) {
   const Show = SHOWS[channel.slug];
+  const score = CHANNEL_MUSIC[channel.slug];
 
   return (
     <section className={styles.watch} style={{ background: channel.color }}>
       <button className={styles.back} onClick={onClose}>
         ← back to TV <kbd>esc</kbd>
       </button>
+      {score && (
+        <button className={styles.sound} onClick={onToggleMute} aria-pressed={muted}>
+          {muted ? "♪ sound off" : "♪ sound on"} <kbd>m</kbd>
+        </button>
+      )}
       {Show ? (
         <Show {...programming} />
       ) : (

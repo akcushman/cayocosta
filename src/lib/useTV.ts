@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { CHANNEL_MUSIC } from "@/content/music";
 import { CHANNELS } from "@/lib/channels";
 import { TVAudio } from "@/lib/tvAudio";
 
@@ -22,6 +23,7 @@ export function useTV() {
   /** Extra static from a half-tuned signal (pocket TV dial), 0–1. */
   const [noise, setNoise] = useState(0);
   const [volume, setVolumeState] = useState(0.8);
+  const [muted, setMuted] = useState(false);
 
   const audio = useRef<TVAudio | null>(null);
   const phaseTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -72,11 +74,13 @@ export function useTV() {
       if (!isTuned) return;
       audio.current?.click();
       audio.current?.hiss(0.8, 20);
+      audio.current?.fadeMusic(0, 80);
       setWatching(false);
       setIndex((next + CHANNELS.length) % CHANNELS.length);
       setPhase("switching");
       after(SWITCH_MS, () => {
         audio.current?.hiss(0, 120);
+        audio.current?.fadeMusic(1, 600);
         setPhase("on");
         flashOsd();
       });
@@ -120,6 +124,20 @@ export function useTV() {
 
   const closeWatch = useCallback(() => setWatching(false), []);
 
+  const toggleMute = useCallback(() => {
+    setMuted((m) => {
+      audio.current?.setMuted(!m);
+      return !m;
+    });
+  }, []);
+
+  // Each channel's score plays once the picture is steady (not during
+  // static, warm-up or a dial drag); flipping away switches the score.
+  const settled = phase === "on" && noise === 0;
+  useEffect(() => {
+    if (settled) audio.current?.setMusic(CHANNEL_MUSIC[channel.slug]?.map((t) => t.src) ?? []);
+  }, [settled, channel.slug]);
+
   const setVolume = useCallback((v: number) => {
     setVolumeState(v);
     audio.current?.setVolume(v);
@@ -130,6 +148,7 @@ export function useTV() {
       if (phase === "warming") return skipWarmup();
       if (!isTuned) return;
 
+      if (e.key === "m" || e.key === "M") return toggleMute();
       if (watching) {
         if (e.key === "Escape" || e.key === "Backspace") setWatching(false);
         return;
@@ -150,7 +169,7 @@ export function useTV() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [phase, isTuned, watching, index, flip, tuneTo, skipWarmup, watch]);
+  }, [phase, isTuned, watching, index, flip, tuneTo, skipWarmup, watch, toggleMute]);
 
   useEffect(
     () => () => {
@@ -168,6 +187,7 @@ export function useTV() {
     watching,
     noise,
     volume,
+    muted,
     isOn,
     isTuned,
     powerOn,
@@ -180,6 +200,7 @@ export function useTV() {
     watch,
     closeWatch,
     setVolume,
+    toggleMute,
   };
 }
 

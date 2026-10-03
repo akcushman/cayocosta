@@ -1,5 +1,5 @@
 // CH 05 · Photography. Order here is the order they air.
-// Sizes, years and cameras come from scripts/photos.mjs. No captions:
+// Sizes, cameras and exposures come from scripts/photos.mjs. No captions:
 // the photos speak for themselves.
 
 import generated from "./photos.generated.json";
@@ -25,8 +25,9 @@ export type Photo = {
   thumb: string;
   width: number;
   height: number;
-  year: string | null;
   camera: string | null;
+  /** e.g. "218mm · f/6.3 · 1/320s · ISO 200" */
+  exposure: string | null;
 };
 
 export const PHOTOS: Photo[] = ORDER.map((slug) => ({

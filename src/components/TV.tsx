@@ -48,6 +48,16 @@ export default function TV({ tv }: { tv: TVState }) {
               <button className={styles.chButton} onClick={() => tv.flip(1)} disabled={!isOn} aria-label="Channel up">
                 CH ▲
               </button>
+              <button
+                className={styles.chButton}
+                data-active={tv.muted}
+                onClick={tv.toggleMute}
+                disabled={!isOn}
+                aria-pressed={tv.muted}
+                aria-label="Mute"
+              >
+                MUTE
+              </button>
               <span className={styles.led} data-on={isOn} />
               <button
                 className={styles.power}

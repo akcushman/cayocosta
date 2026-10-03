@@ -2,49 +2,49 @@
   "headshot": {
     "width": 480,
     "height": 600,
-    "year": null,
-    "camera": "Canon EOS 80D"
+    "camera": "Canon EOS 80D",
+    "exposure": "135mm · f/5.6 · 1/200s · ISO 250"
   },
   "corgi": {
     "width": 480,
     "height": 600,
-    "year": null,
-    "camera": "iPhone 17 Pro"
+    "camera": "iPhone 17 Pro",
+    "exposure": "7mm · f/1.8 · 1/121s · ISO 100"
   },
   "doorway": {
     "width": 480,
     "height": 600,
-    "year": "2026",
-    "camera": "iPhone 17 Pro"
+    "camera": "iPhone 17 Pro",
+    "exposure": "7mm · f/1.8 · 1/73s · ISO 100"
   },
   "japan": {
     "width": 480,
     "height": 600,
-    "year": "2026",
-    "camera": "iPhone 15 Pro"
+    "camera": "iPhone 15 Pro",
+    "exposure": "7mm · f/1.8 · 1/4300s · ISO 80"
   },
   "harbor": {
     "width": 480,
     "height": 600,
-    "year": null,
-    "camera": null
+    "camera": null,
+    "exposure": null
   },
   "aquarium": {
     "width": 480,
     "height": 600,
-    "year": "2024",
-    "camera": "iPhone 15 Pro"
+    "camera": "iPhone 15 Pro",
+    "exposure": "7mm · f/1.8 · 1/60s · ISO 640"
   },
   "leaves": {
     "width": 480,
     "height": 600,
-    "year": null,
-    "camera": null
+    "camera": null,
+    "exposure": null
   },
   "red-robe": {
     "width": 480,
     "height": 600,
-    "year": null,
-    "camera": null
+    "camera": null,
+    "exposure": null
   }
 }

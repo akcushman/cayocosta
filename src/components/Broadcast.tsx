@@ -38,7 +38,13 @@ export default function Broadcast({ programming }: { programming: Programming })
           <PocketTV tv={tv} />
         </div>
       )}
-      {tv.watching && <WatchView channel={tv.channel} programming={programming} onClose={tv.closeWatch} />}
+      {tv.watching && <WatchView
+          channel={tv.channel}
+          programming={programming}
+          muted={tv.muted}
+          onToggleMute={tv.toggleMute}
+          onClose={tv.closeWatch}
+        />}
     </>
   );
 }
