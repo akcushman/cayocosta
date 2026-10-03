@@ -3,7 +3,9 @@
 import { useRef, useState } from "react";
 import { CHANNELS } from "@/lib/channels";
 import type { TVState } from "@/lib/useTV";
+import AKLogo from "./AKLogo";
 import Picture from "./Picture";
+import Wordmark from "./Wordmark";
 import styles from "./PocketTV.module.css";
 
 // Mobile: a 90s handheld TV. Drag the tuning dial and the picture comes
@@ -79,7 +81,7 @@ export default function PocketTV({ tv }: { tv: TVState }) {
     <main className={styles.room}>
       <div className={styles.device}>
         <div className={styles.topRow}>
-          <span className={styles.brand}>CUSHMAN</span>
+          <Wordmark className={styles.brand} kana={false} />
           <span className={styles.model}>pocket</span>
           <span className={styles.led} data-on={isOn} />
         </div>
@@ -96,8 +98,11 @@ export default function PocketTV({ tv }: { tv: TVState }) {
         </div>
 
         <div className={styles.badgeRow}>
-          <span className={styles.badge}>AK</span>
-          <span className={styles.spec}>FLAT · TUBE · COLOR</span>
+          <AKLogo className={styles.badge} />
+          <span className={styles.spec}>
+            <span lang="ja">カッシュマン</span>
+            <span>FLAT · TUBE · COLOR</span>
+          </span>
         </div>
 
         <div className={styles.grille} aria-hidden />

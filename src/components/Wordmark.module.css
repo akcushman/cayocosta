@@ -1,0 +1,28 @@
+.wordmark {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35em;
+  line-height: 1;
+}
+
+.latin {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 1em;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.16em;
+  background: linear-gradient(180deg, #eceef1 0%, #b9bdc4 55%, #8e939b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 -1px 0 rgba(0, 0, 0, 0.9));
+}
+
+.kana {
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  font-size: 0.5em;
+  font-weight: 600;
+  letter-spacing: 0.5em;
+  color: #6c6c74;
+}

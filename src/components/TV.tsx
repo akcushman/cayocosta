@@ -2,7 +2,9 @@
 
 import { useRef } from "react";
 import type { TVState } from "@/lib/useTV";
+import AKLogo from "./AKLogo";
 import Picture from "./Picture";
+import Wordmark from "./Wordmark";
 import styles from "./TV.module.css";
 
 // Desktop: the living-room 90s set.
@@ -37,8 +39,8 @@ export default function TV({ tv }: { tv: TVState }) {
           </div>
 
           <div className={styles.chin}>
-            <span className={styles.brand}>AK</span>
-            <span className={styles.model}>CUSHMAN</span>
+            <AKLogo className={styles.brand} />
+            <Wordmark className={styles.model} />
             <div className={styles.controls}>
               <button className={styles.chButton} onClick={() => tv.flip(-1)} disabled={!isOn} aria-label="Channel down">
                 CH ▼

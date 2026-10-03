@@ -74,7 +74,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: clamp(54px, 9vw, 84px);
+  height: clamp(62px, 9.5vw, 90px);
   padding: 0 1%;
 }
 
@@ -82,22 +82,11 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  font-family: var(--font-geist-sans), sans-serif;
-  font-weight: 700;
-  font-size: clamp(14px, 2.2vw, 22px);
-  letter-spacing: 0.32em;
-  /* Balance the trailing letter-spacing so the badge sits truly centered. */
-  padding-left: 0.32em;
-  color: #c9c9cf;
-  text-shadow: 0 1px 0 #000;
+  height: clamp(40px, 5.8vw, 60px);
 }
 
 .model {
-  font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(8px, 1.1vw, 11px);
-  font-weight: 600;
-  letter-spacing: 0.4em;
-  color: #6c6c74;
+  font-size: clamp(12px, 1.6vw, 17px);
 }
 
 .controls {
@@ -183,22 +172,6 @@
 
 .touchOnly {
   display: none;
-}
-
-@media (max-width: 600px) {
-  .model {
-    display: none;
-  }
-
-  .brand {
-    position: static;
-    transform: none;
-    letter-spacing: 0.24em;
-  }
-
-  .hint {
-    font-size: 17px;
-  }
 }
 
 @media (hover: none) {

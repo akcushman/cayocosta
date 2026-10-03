@@ -34,7 +34,7 @@ export const CHANNELS: Channel[] = [
     number: 2,
     slug: "building",
     title: "Building",
-    tagline: "Companies, products & things I've started",
+    tagline: "The story so far, in six episodes",
     color: "linear-gradient(160deg, #6a1b1b 0%, #1a0707 100%)",
   },
   {
@@ -48,7 +48,7 @@ export const CHANNELS: Channel[] = [
     number: 4,
     slug: "interests",
     title: "Interests",
-    tagline: "Things I can't stop thinking about",
+    tagline: "Things I love to talk about",
     color: "linear-gradient(160deg, #134a5c 0%, #04131a 100%)",
   },
   {

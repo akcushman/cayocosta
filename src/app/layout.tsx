@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, VT323 } from "next/font/google";
+import { Geist, VT323, Zilla_Slab } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -10,6 +10,12 @@ const geistSans = Geist({
 const vt323 = VT323({
   variable: "--font-vt323",
   weight: "400",
+  subsets: ["latin"],
+});
+
+const slab = Zilla_Slab({
+  variable: "--font-slab",
+  weight: "700",
   subsets: ["latin"],
 });
 
@@ -24,7 +30,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${vt323.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${vt323.variable} ${slab.variable}`}>
       <body>{children}</body>
     </html>
   );

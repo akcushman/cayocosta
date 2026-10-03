@@ -38,10 +38,7 @@
 }
 
 .brand {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.34em;
-  color: #c9c9cf;
+  font-size: 14px;
 }
 
 .model {
@@ -93,17 +90,25 @@
 }
 
 .badge {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  color: #c9c9cf;
+  height: 42px;
 }
 
 .spec {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
   font-size: 8px;
   font-weight: 600;
   letter-spacing: 0.3em;
   color: #5c5c64;
+}
+
+.spec [lang="ja"] {
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  color: #6c6c74;
 }
 
 /* Perforated speaker grille; soaks up whatever height is left. */
