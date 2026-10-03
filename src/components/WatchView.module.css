@@ -1,0 +1,88 @@
+.watch {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow-y: auto;
+  color: #f4f1ea;
+  animation: zoomIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.6); opacity: 0; filter: brightness(3); }
+  to { transform: scale(1); opacity: 1; filter: brightness(1); }
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.22) 0px,
+    rgba(0, 0, 0, 0.22) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+.back {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 20px 16px;
+  padding: 8px 14px;
+  font-family: var(--font-vt323), monospace;
+  font-size: 20px;
+  color: inherit;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.back kbd {
+  margin-left: 8px;
+  opacity: 0.6;
+  font-family: inherit;
+}
+
+@media (hover: none) {
+  .back kbd {
+    display: none;
+  }
+}
+
+.body {
+  max-width: 760px;
+  margin: 8vh auto;
+  padding: 0 16px;
+}
+
+.channel {
+  font-family: var(--font-vt323), monospace;
+  font-size: 28px;
+  color: #5dff6e;
+  text-shadow: 0 0 6px rgba(93, 255, 110, 0.8);
+}
+
+.body h1 {
+  margin-top: 12px;
+  font-size: clamp(44px, 10vw, 96px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.body p {
+  margin-top: 20px;
+  font-size: 20px;
+  opacity: 0.8;
+}
+
+.body .comingSoon {
+  font-family: var(--font-vt323), monospace;
+  font-size: 22px;
+  opacity: 0.5;
+}

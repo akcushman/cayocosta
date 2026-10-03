@@ -1,0 +1,329 @@
+.room {
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+  background: radial-gradient(ellipse at 50% 30%, #1c1c22 0%, #0b0b0e 60%, #050506 100%);
+  overflow: hidden;
+  /* The dial and screen handle their own gestures. */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ---------- The handheld ---------- */
+
+.device {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 14px 18px;
+  border-radius: 30px;
+  background: linear-gradient(170deg, #2a2a2f 0%, #17171a 18%, #111113 70%, #0b0b0d 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.7),
+    inset 2px 0 0 rgba(255, 255, 255, 0.04),
+    0 30px 60px -20px rgba(0, 0, 0, 0.9),
+    0 0 0 1px #050505;
+}
+
+.topRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 2px 6px 0;
+}
+
+.brand {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  color: #c9c9cf;
+}
+
+.model {
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 600;
+  color: #e0a23a;
+}
+
+.led {
+  margin-left: auto;
+  align-self: center;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff2a1f;
+  box-shadow: 0 0 6px 1px rgba(255, 42, 31, 0.8);
+}
+
+.led[data-on="true"] {
+  background: #4dff7a;
+  box-shadow: 0 0 6px 1px rgba(77, 255, 122, 0.8);
+}
+
+.bezel {
+  padding: 10px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #08080a, #18181b);
+  box-shadow:
+    inset 0 3px 8px rgba(0, 0, 0, 0.9),
+    0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.screen {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  container-type: inline-size;
+  border-radius: 7% / 9%;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 45%, #1b1f1d 0%, #0d0f0e 70%, #060707 100%);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9);
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+}
+
+.badge {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #c9c9cf;
+}
+
+.spec {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: #5c5c64;
+}
+
+/* Perforated speaker grille; soaks up whatever height is left. */
+.grille {
+  flex: 1;
+  min-height: 36px;
+  margin: 0 6px;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle, #040405 1.6px, transparent 2.1px) 0 0 / 9px 9px,
+    linear-gradient(180deg, #19191c, #141416);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* ---------- Tuning dial ---------- */
+
+.tuner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dial {
+  position: relative;
+  height: 64px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #2b2416 0%, #1a160d 100%);
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.9),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.6),
+    0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  cursor: grab;
+}
+
+.dial[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+/* Backlit glass, warmer when the set is on. */
+.dial::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 120%, rgba(255, 190, 90, 0.08), transparent 70%);
+  transition: background 0.6s;
+}
+
+.dial[data-live="true"]::before {
+  background: radial-gradient(ellipse at 50% 120%, rgba(255, 190, 90, 0.28), transparent 70%);
+}
+
+.dial::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 40%);
+  pointer-events: none;
+}
+
+.scale {
+  position: absolute;
+  inset: 0 24px;
+  background: repeating-linear-gradient(
+      90deg,
+      rgba(240, 220, 180, 0.35) 0 1px,
+      transparent 1px calc(100% / 36)
+    )
+    0 100% / 100% 10px no-repeat;
+}
+
+.mark {
+  position: absolute;
+  top: 12px;
+  transform: translateX(-50%);
+  font-family: var(--font-vt323), monospace;
+  font-size: 22px;
+  line-height: 1;
+  color: rgba(240, 220, 180, 0.75);
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.mark[data-active="true"] {
+  color: #ffd27a;
+  text-shadow: 0 0 8px rgba(255, 190, 90, 0.8);
+}
+
+/* The needle lives in the same coordinate space as the marks. */
+.needle {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  transform: translateX(-50%);
+  background: #ff3b30;
+  box-shadow: 0 0 6px rgba(255, 59, 48, 0.9);
+  transition: left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.dial[data-dragging="true"] .needle {
+  transition: none;
+}
+
+.status {
+  min-height: 1.2em;
+  text-align: center;
+  font-family: var(--font-vt323), monospace;
+  font-size: 17px;
+  letter-spacing: 0.08em;
+  color: #7a7a83;
+  text-transform: uppercase;
+}
+
+/* ---------- Bottom controls ---------- */
+
+.bottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 6px;
+}
+
+.volume {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  max-width: 180px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #6c6c74;
+}
+
+/* A ridged thumbwheel instead of a stock slider. */
+.volume input {
+  flex: 1;
+  height: 18px;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 4px;
+  background:
+    repeating-linear-gradient(90deg, #0a0a0b 0 2px, #2a2a2f 2px 5px);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.volume input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 22px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #4a4a52, #26262b);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.volume input::-moz-range-thumb {
+  width: 14px;
+  height: 22px;
+  border: 0;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #4a4a52, #26262b);
+}
+
+.power {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.powerLabel {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #6c6c74;
+}
+
+.powerTrack {
+  position: relative;
+  width: 52px;
+  height: 22px;
+  border-radius: 11px;
+  background: #070708;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.powerKnob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 26px;
+  height: 18px;
+  border-radius: 9px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 3px, rgba(0, 0, 0, 0.35) 3px 4px) 50% 50% / 12px 10px no-repeat,
+    linear-gradient(180deg, #55555d, #2a2a2f);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: left 0.18s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+
+.power[data-on="true"] .powerKnob {
+  left: 24px;
+}
+
+.power[data-beckon="true"] .powerTrack {
+  animation: beckon 2.4s ease-in-out infinite;
+}
+
+@keyframes beckon {
+  0%, 100% { box-shadow: inset 0 2px 4px rgba(0,0,0,.9), 0 0 0 0 rgba(255,80,60,0); }
+  50% { box-shadow: inset 0 2px 4px rgba(0,0,0,.9), 0 0 16px 2px rgba(255,80,60,.4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .power[data-beckon="true"] .powerTrack {
+    animation: none;
+  }
+}

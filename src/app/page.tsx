@@ -1,5 +1,5 @@
-import TV from "@/components/TV";
+import Broadcast from "@/components/Broadcast";
 
 export default function Home() {
-  return <TV />;
+  return <Broadcast />;
 }

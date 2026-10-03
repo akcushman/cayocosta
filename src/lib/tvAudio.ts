@@ -5,6 +5,8 @@
 export class TVAudio {
   private ctx: AudioContext | null = null;
   private hissGain: GainNode | null = null;
+  private master: GainNode | null = null;
+  private volume = 0.8;
 
   init() {
     if (this.ctx) {
@@ -13,6 +15,12 @@ export class TVAudio {
     }
     const ctx = new AudioContext();
     this.ctx = ctx;
+
+    // Everything routes through one master gain for the volume control.
+    const master = ctx.createGain();
+    master.gain.value = this.volume;
+    master.connect(ctx.destination);
+    this.master = master;
 
     // Two seconds of white noise, looped forever and gated by hissGain.
     const buffer = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
@@ -35,8 +43,13 @@ export class TVAudio {
     gain.gain.value = 0;
     this.hissGain = gain;
 
-    source.connect(highpass).connect(lowpass).connect(gain).connect(ctx.destination);
+    source.connect(highpass).connect(lowpass).connect(gain).connect(master);
     source.start();
+  }
+
+  setVolume(v: number) {
+    this.volume = v;
+    if (this.ctx && this.master) this.master.gain.setTargetAtTime(v, this.ctx.currentTime, 0.03);
   }
 
   /** Ramp the static hiss to `level` (0–1) over `ms`. */
@@ -62,7 +75,7 @@ export class TVAudio {
     thump.frequency.exponentialRampToValueAtTime(40, now + 0.25);
     thumpGain.gain.setValueAtTime(0.5, now);
     thumpGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-    thump.connect(thumpGain).connect(ctx.destination);
+    thump.connect(thumpGain).connect(this.master!);
     thump.start(now);
     thump.stop(now + 0.4);
 
@@ -73,7 +86,7 @@ export class TVAudio {
     whineGain.gain.setValueAtTime(0, now);
     whineGain.gain.linearRampToValueAtTime(0.012, now + 0.3);
     whineGain.gain.linearRampToValueAtTime(0, now + 2.5);
-    whine.connect(whineGain).connect(ctx.destination);
+    whine.connect(whineGain).connect(this.master!);
     whine.start(now);
     whine.stop(now + 2.6);
   }
@@ -89,7 +102,7 @@ export class TVAudio {
     osc.frequency.setValueAtTime(1800, now);
     gain.gain.setValueAtTime(0.06, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-    osc.connect(gain).connect(ctx.destination);
+    osc.connect(gain).connect(this.master!);
     osc.start(now);
     osc.stop(now + 0.04);
   }
@@ -106,7 +119,7 @@ export class TVAudio {
     osc.frequency.exponentialRampToValueAtTime(60, now + 0.3);
     gain.gain.setValueAtTime(0.15, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-    osc.connect(gain).connect(ctx.destination);
+    osc.connect(gain).connect(this.master!);
     osc.start(now);
     osc.stop(now + 0.4);
   }
