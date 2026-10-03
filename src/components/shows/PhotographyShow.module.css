@@ -22,7 +22,7 @@
 .shot {
   position: absolute;
   inset: 0;
-  animation: dissolve 1.6s ease-in-out both;
+  animation: dissolve 1s ease-out both;
 }
 
 /* The outgoing shot holds still beneath the dissolve. */
@@ -43,6 +43,7 @@
 
 .photo {
   object-fit: contain;
+  will-change: transform;
   animation: panLeft 9s ease-out both;
 }
 
@@ -102,6 +103,16 @@
   color: #ffd27a;
 }
 
+/* Off-screen neighbours, loaded but never painted. */
+.preload {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .vignette {
   position: absolute;
   inset: 0;
@@ -122,7 +133,7 @@
   gap: 14px;
   background: #000;
   cursor: pointer;
-  animation: titleCard 3.2s ease-in-out both;
+  animation: titleCard 1.8s ease-in-out both;
 }
 
 @keyframes titleCard {
@@ -137,7 +148,7 @@
   letter-spacing: 0.5em;
   text-transform: uppercase;
   opacity: 0;
-  animation: fadeUp 1s 0.3s ease-out forwards;
+  animation: fadeUp 0.6s 0.1s ease-out forwards;
 }
 
 .filmTitle {
@@ -146,7 +157,7 @@
   font-weight: 700;
   letter-spacing: -0.01em;
   opacity: 0;
-  animation: fadeUp 1.2s 0.9s ease-out forwards;
+  animation: fadeUp 0.7s 0.35s ease-out forwards;
 }
 
 @keyframes fadeUp {
@@ -266,6 +277,11 @@
 }
 
 @media (max-width: 700px) {
+  /* A live blur is the most expensive thing on a phone; use plain black. */
+  .backdrop {
+    display: none;
+  }
+
   .frame {
     width: 100%;
     aspect-ratio: 4 / 5;

@@ -11,22 +11,37 @@ import styles from "./PhotographyShow.module.css";
 // corner and a film strip. The controls get out of the way while you watch.
 
 const HOLD_MS = 7000;
-const INTRO_MS = 3200;
+const INTRO_MS = 1800;
+/** Dissolve lengths: quick when you're clicking through, gentle on autoplay. */
+const MANUAL_FADE_MS = 350;
+const AUTO_FADE_MS = 1000;
 const IDLE_MS = 2500;
 
 const wrap = (i: number) => (i + PHOTOS.length) % PHOTOS.length;
 
 export default function PhotographyShow() {
-  const [shot, setShot] = useState<{ index: number; prev: number | null }>({ index: 0, prev: null });
+  const [shot, setShot] = useState<{ index: number; prev: number | null; manual: boolean }>({
+    index: 0,
+    prev: null,
+    manual: false,
+  });
   const [playing, setPlaying] = useState(true);
   const [intro, setIntro] = useState(true);
   const [idle, setIdle] = useState(false);
   const touchX = useRef<number | null>(null);
   const idleTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const { index, prev } = shot;
+  const { index, prev, manual } = shot;
   const photo = PHOTOS[index];
-  const go = (i: number) => setShot((s) => ({ index: wrap(i), prev: s.index }));
+  const fadeMs = manual ? MANUAL_FADE_MS : AUTO_FADE_MS;
+  const go = (i: number) => setShot((s) => ({ index: wrap(i), prev: s.index, manual: true }));
+
+  // Drop the outgoing shot once the dissolve is done: fewer layers to paint.
+  useEffect(() => {
+    if (prev === null) return;
+    const id = setTimeout(() => setShot((s) => ({ ...s, prev: null })), fadeMs + 50);
+    return () => clearTimeout(id);
+  }, [prev, index, fadeMs]);
 
   useEffect(() => {
     const id = setTimeout(() => setIntro(false), INTRO_MS);
@@ -35,7 +50,10 @@ export default function PhotographyShow() {
 
   useEffect(() => {
     if (!playing || intro) return;
-    const id = setTimeout(() => setShot((s) => ({ index: wrap(s.index + 1), prev: s.index })), HOLD_MS);
+    const id = setTimeout(
+      () => setShot((s) => ({ index: wrap(s.index + 1), prev: s.index, manual: false })),
+      HOLD_MS,
+    );
     return () => clearTimeout(id);
   }, [playing, intro, index]);
 
@@ -85,9 +103,21 @@ export default function PhotographyShow() {
             <Image className={styles.photo} src={PHOTOS[prev].src} alt="" fill sizes="100vw" />
           </div>
         )}
-        <div className={styles.shot} key={photo.slug} data-pan={index % 2 ? "right" : "left"}>
+        <div
+          className={styles.shot}
+          key={photo.slug}
+          data-pan={index % 2 ? "right" : "left"}
+          style={{ animationDuration: `${fadeMs}ms` }}
+        >
           <Image className={styles.backdrop} src={photo.thumb} alt="" fill sizes="10vw" aria-hidden />
           <Image className={styles.photo} src={photo.src} alt="Photograph by AK Cushman" fill sizes="100vw" priority />
+        </div>
+
+        {/* Load the neighbours ahead of time so a tap or swipe is instant. */}
+        <div className={styles.preload} aria-hidden>
+          {[index + 1, index - 1].map((i) => (
+            <Image key={PHOTOS[wrap(i)].slug} src={PHOTOS[wrap(i)].src} alt="" fill sizes="100vw" loading="eager" />
+          ))}
         </div>
 
         <div className={styles.vignette} aria-hidden />
