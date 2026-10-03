@@ -1,0 +1,333 @@
+/* 90s music television: Memphis shapes, loud colour, white credits. */
+
+.show {
+  --pink: #ff3ea5;
+  --yellow: #ffe23a;
+  --teal: #19d3c5;
+  --purple: #6b2bff;
+
+  position: relative;
+  min-height: 100%;
+  padding: 80px 16px 72px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(107, 43, 255, 0.55), transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(255, 62, 165, 0.4), transparent 45%),
+    #111;
+  color: #fff;
+}
+
+/* ---------- Background shapes ---------- */
+
+.shapes span {
+  position: absolute;
+  pointer-events: none;
+}
+
+.squiggle {
+  top: 12%;
+  right: 6%;
+  width: 180px;
+  height: 40px;
+  background: radial-gradient(circle at 10px -4px, transparent 12px, var(--teal) 13px 18px, transparent 19px) 0 0 / 40px 20px repeat-x,
+    radial-gradient(circle at 30px 24px, transparent 12px, var(--teal) 13px 18px, transparent 19px) 0 0 / 40px 20px repeat-x;
+  transform: rotate(-12deg);
+  opacity: 0.8;
+}
+
+.triangle {
+  bottom: 18%;
+  left: 3%;
+  width: 0;
+  height: 0;
+  border-left: 60px solid transparent;
+  border-right: 60px solid transparent;
+  border-bottom: 100px solid var(--yellow);
+  transform: rotate(18deg);
+  opacity: 0.85;
+}
+
+.dots {
+  top: 38%;
+  left: 46%;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, var(--pink) 3px, transparent 4px) 0 0 / 18px 18px;
+  opacity: 0.5;
+}
+
+.circle {
+  bottom: 2%;
+  right: 3%;
+  width: 90px;
+  height: 90px;
+  border: 14px solid var(--purple);
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+/* ---------- Header ---------- */
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto 36px;
+}
+
+/* The logo that never looks the same twice. */
+.logo {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 54px;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  transform: rotate(-6deg);
+  transition: transform 0.25s;
+}
+
+.logo[data-variant="0"] { background: var(--yellow); color: #111; }
+.logo[data-variant="1"] {
+  background: repeating-conic-gradient(#111 0 25%, #fff 0 50%) 0 0 / 24px 24px;
+  color: var(--pink);
+  -webkit-text-stroke: 2px #111;
+  transform: rotate(4deg) scale(1.05);
+}
+.logo[data-variant="2"] {
+  background: var(--pink);
+  color: var(--yellow);
+  border-radius: 50%;
+  transform: rotate(-12deg);
+}
+.logo[data-variant="3"] {
+  background: radial-gradient(circle, var(--yellow) 3px, transparent 4px) 0 0 / 14px 14px, var(--purple);
+  color: #fff;
+  transform: rotate(8deg);
+}
+.logo[data-variant="4"] {
+  background: transparent;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--teal);
+  border: 4px solid var(--teal);
+  transform: rotate(-3deg) skewX(-8deg);
+}
+
+.kicker {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.title {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: clamp(52px, 9vw, 110px);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  text-shadow: 4px 4px 0 var(--pink), 8px 8px 0 var(--purple);
+}
+
+/* ---------- Stage ---------- */
+
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.video {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #000;
+  border: 4px solid #fff;
+  box-shadow: 12px 12px 0 var(--yellow);
+}
+
+.cover {
+  object-fit: cover;
+  animation: zoom 12s ease-in-out infinite alternate;
+}
+
+@keyframes zoom {
+  to { transform: scale(1.08); }
+}
+
+.scan {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+/* The bottom-left credit every music video had. */
+.credit {
+  position: absolute;
+  left: 6%;
+  bottom: 7%;
+  max-width: 80%;
+  font-family: var(--font-geist-sans), sans-serif;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  animation: creditIn 4.5s ease-out both;
+}
+
+@keyframes creditIn {
+  0% { opacity: 0; }
+  10%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.artist,
+.song {
+  font-size: clamp(15px, 1.8vw, 20px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.album {
+  margin-top: 2px;
+  font-size: clamp(12px, 1.4vw, 15px);
+  opacity: 0.85;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.label strong {
+  color: var(--yellow);
+}
+
+.rec {
+  color: #ff3b30;
+  animation: blink 1.2s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.embed {
+  width: 100%;
+  height: 452px;
+  border: 0;
+  border-radius: 12px;
+  background: #222;
+}
+
+/* ---------- Heavy rotation ---------- */
+
+.rotation {
+  position: relative;
+  max-width: 1100px;
+  margin: 56px auto 0;
+}
+
+.rotationTitle {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 22px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #111;
+  background: var(--teal);
+  transform: rotate(-2deg);
+}
+
+.list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 2px 28px;
+  margin-top: 20px;
+}
+
+.list li {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.num {
+  grid-row: span 2;
+  font-family: var(--font-vt323), monospace;
+  font-size: 24px;
+  color: var(--pink);
+}
+
+.trackArtist {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.trackTitle {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+.more {
+  display: inline-block;
+  margin-top: 22px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  border-bottom: 2px solid currentColor;
+}
+
+@media (max-width: 760px) {
+  .stage {
+    grid-template-columns: 1fr;
+  }
+
+  .logo {
+    width: 72px;
+    height: 72px;
+    font-size: 40px;
+  }
+
+  .embed {
+    height: 380px;
+  }
+
+  .dots,
+  .squiggle {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover,
+  .rec {
+    animation: none;
+  }
+}

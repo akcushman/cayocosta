@@ -1,15 +1,17 @@
 import type { ComponentType } from "react";
 import type { Channel } from "@/lib/channels";
+import type { Playlist } from "@/lib/spotify";
 import type { Post } from "@/lib/substack";
 import { pad } from "./Picture";
 import BuildingShow from "./shows/BuildingShow";
 import InterestsShow from "./shows/InterestsShow";
+import OnAirShow from "./shows/OnAirShow";
 import PhotographyShow from "./shows/PhotographyShow";
 import WritingShow from "./shows/WritingShow";
 import styles from "./WatchView.module.css";
 
 /** Data fetched on the server for shows that need it. */
-export type Programming = { posts: Post[] };
+export type Programming = { posts: Post[]; playlist: Playlist | null };
 
 // Each channel airs its own kind of show. Channels without one yet fall
 // back to a "coming soon" card.
@@ -18,6 +20,7 @@ const SHOWS: Record<string, ComponentType<Programming>> = {
   writing: WritingShow,
   interests: InterestsShow,
   photography: PhotographyShow,
+  "on-air": OnAirShow,
 };
 
 // A channel opened full screen.
