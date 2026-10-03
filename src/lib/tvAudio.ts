@@ -2,6 +2,9 @@
 // Browsers only allow audio after a user gesture, so `init()` must be
 // called from the power-button click.
 
+/** A zero-length WAV, used to unlock audio on iOS. */
+const SILENCE = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
+
 export class TVAudio {
   private ctx: AudioContext | null = null;
   private hissGain: GainNode | null = null;
@@ -60,12 +63,11 @@ export class TVAudio {
     ctx.createMediaElementSource(music).connect(musicGain).connect(master);
     this.music = music;
     this.musicGain = musicGain;
-    // iOS only lets an element play later if it first played in a tap.
-    music.muted = true;
-    void music.play().catch(() => {}).finally(() => {
-      music.pause();
-      music.muted = false;
-    });
+    // iOS only lets an element play later if it first played in a tap, so
+    // play a blank clip now (we're inside the power-button click). Nothing
+    // may pause it afterwards: that would also stop the real score.
+    music.src = SILENCE;
+    void music.play().catch(() => {});
   }
 
   /** Switch to a channel's score (list of URLs); [] fades to silence. */
