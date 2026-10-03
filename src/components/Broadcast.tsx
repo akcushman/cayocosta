@@ -1,8 +1,9 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { useTV } from "@/lib/useTV";
 import PocketTV from "./PocketTV";
+import { preloadSpotify } from "./shows/SpotifyPlayer";
 import TV from "./TV";
 import WatchView, { type Programming } from "./WatchView";
 import styles from "./Broadcast.module.css";
@@ -20,6 +21,9 @@ const subscribe = (onChange: () => void) => {
 // (powered off) and CSS shows the right one.
 export default function Broadcast({ programming }: { programming: Programming }) {
   const tv = useTV();
+
+  // Spotify's player API takes several seconds to boot; start it early.
+  useEffect(preloadSpotify, []);
   const pocket = useSyncExternalStore(
     subscribe,
     () => window.matchMedia(POCKET_QUERY).matches,

@@ -212,6 +212,13 @@
   from { transform: scale(0.6); opacity: 0; }
 }
 
+.music {
+  justify-content: center;
+  max-width: 640px;
+  margin-top: 12px;
+  color: #b9c3ff;
+}
+
 .result strong {
   color: #ffd75e;
 }

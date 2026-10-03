@@ -2,11 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // Playlist cover art for CH 06 · On Air.
-    remotePatterns: [
-      { protocol: "https", hostname: "**.spotifycdn.com" },
-      { protocol: "https", hostname: "i.scdn.co" },
-    ],
+    // scripts/photos.mjs already makes web-sized copies, and Vercel's
+    // on-the-fly resizer stalled for 5–9s when a channel asked for a dozen
+    // images at once. Serve the files straight from the CDN instead.
+    unoptimized: true,
   },
 };
 

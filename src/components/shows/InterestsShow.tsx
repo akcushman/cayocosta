@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { EMAIL } from "@/content/contact";
 import { INTERESTS, type Interest } from "@/content/interests";
+import MusicCredit from "../MusicCredit";
 import styles from "./InterestsShow.module.css";
 
 // CH 04: a game-show board. Every interest on one board, and a spin
@@ -101,6 +102,7 @@ export default function InterestsShow() {
         <a className={styles.mail} href={`mailto:${EMAIL}${topic && topic !== BYO ? `?subject=${encodeURIComponent(topic.name)}` : ""}`}>
           {EMAIL}
         </a>
+        <MusicCredit channel="interests" className={styles.music} />
       </div>
     </div>
   );

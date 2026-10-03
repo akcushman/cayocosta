@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { EMBED_URL, PLAYLIST_URL, type Playlist } from "@/lib/spotify";
+import { PLAYLIST_URL, type Playlist } from "@/lib/spotify";
 import styles from "./OnAirShow.module.css";
+import SpotifyPlayer from "./SpotifyPlayer";
 
 // CH 06: 90s music television. A logo that never sits still, music-video
 // credits, heavy rotation, and the actual playlist in the player.
@@ -68,13 +69,7 @@ export default function OnAirShow({ playlist }: { playlist: Playlist | null }) {
           <p className={styles.label}>
             <span className={styles.rec}>●</span> Now in rotation: <strong>{playlist?.name ?? "the playlist"}</strong>
           </p>
-          <iframe
-            className={styles.embed}
-            src={EMBED_URL}
-            title="AK's playlist on Spotify"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-          />
+          <SpotifyPlayer className={styles.embed} height={452} />
         </div>
       </section>
 

@@ -62,10 +62,27 @@ const TRACKS = {
     license: "CC0",
     source: "https://commons.wikimedia.org/wiki/File:Chopin_Nocturne_No._2_in_E_Flat_Major,_Op._9.ogg",
   },
+  gameShow: {
+    src: "/music/game-show.mp3",
+    gain: 0.5,
+    piece: "Happy Happy Game Show",
+    performer: "Kevin MacLeod (incompetech.com)",
+    license: "CC BY 3.0",
+    source: "https://commons.wikimedia.org/wiki/File:Happy_Happy_Game_Show_(ISRC_USUAN1600006).mp3",
+  },
+  hotSwing: {
+    src: "/music/hot-swing.mp3",
+    gain: 1,
+    piece: "Hot Swing",
+    performer: "Kevin MacLeod (incompetech.com)",
+    license: "CC BY 3.0",
+    source: "https://commons.wikimedia.org/wiki/File:Hot_Swing_(ISRC_USUAN1100202).mp3",
+  },
 } satisfies Record<string, Track>;
 
 /** Plays in order, then loops. Channels not listed are silent. */
 export const CHANNEL_MUSIC: Record<string, Track[]> = {
   building: [TRACKS.bachPrelude, TRACKS.vivaldiWinter, TRACKS.bachSarabande, TRACKS.vivaldiSpring],
   photography: [TRACKS.satie, TRACKS.chopin],
+  interests: [TRACKS.gameShow, TRACKS.hotSwing],
 };
