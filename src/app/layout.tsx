@@ -32,7 +32,7 @@ const marker = Permanent_Marker({
   subsets: ["latin"],
 });
 
-// Shared links stay small: just "AK" and the crest.
+// Shared links stay small: just "AK" and an orca, white line on black.
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.akcushman.tech"),
   title: "AK Cushman",
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
     siteName: "AK",
     url: "/",
     type: "website",
-    images: [{ url: "/ak.png", width: 256, height: 256, alt: "AK" }],
+    images: [{ url: "/orca.png", width: 256, height: 256, alt: "An orca, drawn in white line on black" }],
   },
-  twitter: { card: "summary", title: "AK", images: ["/ak.png"] },
+  twitter: { card: "summary", title: "AK", images: ["/orca.png"] },
 };
 
 export const viewport: Viewport = {
