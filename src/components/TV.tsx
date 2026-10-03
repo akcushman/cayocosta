@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CHANNELS } from "@/lib/channels";
+import HelloScreen from "./HelloScreen";
 import { TVAudio } from "@/lib/tvAudio";
 import StaticCanvas from "./StaticCanvas";
 import styles from "./TV.module.css";
@@ -105,7 +106,7 @@ export default function TV() {
         flip(-1);
       } else if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        if (phase === "on") setWatching(true);
+        if (phase === "on" && !channel.home) setWatching(true);
       } else if (/^[0-9]$/.test(e.key)) {
         const target = CHANNELS.findIndex((c) => c.number === Number(e.key));
         if (target !== -1 && target !== index) tuneTo(target);
@@ -113,7 +114,7 @@ export default function TV() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [phase, watching, index, flip, tuneTo, skipWarmup]);
+  }, [phase, watching, index, channel.home, flip, tuneTo, skipWarmup]);
 
   useEffect(
     () => () => {
@@ -143,7 +144,7 @@ export default function TV() {
             <div
               className={styles.screen}
               data-phase={phase}
-              onClick={phase === "warming" ? skipWarmup : phase === "on" ? () => setWatching(true) : undefined}
+              onClick={phase === "warming" ? skipWarmup : phase === "on" && !channel.home ? () => setWatching(true) : undefined}
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
             >
@@ -152,9 +153,15 @@ export default function TV() {
                   {phase !== "warming" && (
                     <div className={styles.program} style={{ background: channel.color }}>
                       <div className={styles.stationId}>AK·{pad(channel.number)}</div>
-                      <h1 className={styles.programTitle}>{channel.title}</h1>
-                      <p className={styles.programTagline}>{channel.tagline}</p>
-                      <p className={styles.programPrompt}>▶ press OK to watch</p>
+                      {channel.home ? (
+                        <HelloScreen />
+                      ) : (
+                        <>
+                          <h2 className={styles.programTitle}>{channel.title}</h2>
+                          <p className={styles.programTagline}>{channel.tagline}</p>
+                          <p className={styles.programPrompt}>▶ press OK to watch</p>
+                        </>
+                      )}
                     </div>
                   )}
 
@@ -165,10 +172,12 @@ export default function TV() {
                   {phase === "on" && osd && (
                     <>
                       <div className={styles.osd}>CH {pad(channel.number)}</div>
+                      {!channel.home && (
                       <div className={styles.lowerThird} key={channel.slug}>
                         <span className={styles.lowerThirdNum}>{pad(channel.number)}</span>
                         <span className={styles.lowerThirdTitle}>{channel.title}</span>
                       </div>
+                      )}
                     </>
                   )}
                 </div>
@@ -208,8 +217,10 @@ export default function TV() {
         {phase === "warming" && "tuning in…"}
         {(phase === "on" || phase === "switching") && (
           <>
-            <span className={styles.pointerOnly}>▲ ▼ change channel · enter to watch</span>
-            <span className={styles.touchOnly}>swipe to flip · tap to watch</span>
+            <span className={styles.pointerOnly}>
+              ▲ ▼ change channel{!channel.home && " · enter to watch"}
+            </span>
+            <span className={styles.touchOnly}>swipe to flip{!channel.home && " · tap to watch"}</span>
           </>
         )}
       </p>

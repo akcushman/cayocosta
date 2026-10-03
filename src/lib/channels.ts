@@ -8,9 +8,28 @@ export type Channel = {
   tagline: string;
   /** Background for the channel's broadcast screen. */
   color: string;
+  /** The sign-on screen: first thing you see, nothing to open. */
+  home?: boolean;
 };
 
+export const ROLES = [
+  "Founder",
+  "Technology lover",
+  "Optimist",
+  "Pro-humanist",
+  "U.S. Navy veteran",
+  "& many more things",
+];
+
 export const CHANNELS: Channel[] = [
+  {
+    number: 1,
+    slug: "hello",
+    title: "Hello",
+    tagline: "Thanks for tuning in",
+    color: "linear-gradient(160deg, #1d3557 0%, #0b1320 100%)",
+    home: true,
+  },
   {
     number: 2,
     slug: "building",
