@@ -25,9 +25,25 @@ const marker = Permanent_Marker({
   subsets: ["latin"],
 });
 
+const DESCRIPTION =
+  "hello, i'm autumnkyoko. thanks for tuning in. Founder, technology lover, optimist, pro-humanist and U.S. Navy veteran. This is an analog of my life.";
+
 export const metadata: Metadata = {
-  title: "Cayo Costa",
-  description: "Now broadcasting.",
+  metadataBase: new URL("https://www.akcushman.tech"),
+  title: "AK Cushman",
+  description: DESCRIPTION,
+  openGraph: {
+    title: "AK Cushman · Now broadcasting",
+    description: DESCRIPTION,
+    url: "/",
+    siteName: "AK Cushman",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AK Cushman · Now broadcasting",
+    description: DESCRIPTION,
+  },
 };
 
 export const viewport: Viewport = {
