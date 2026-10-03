@@ -1,0 +1,50 @@
+{
+  "headshot": {
+    "width": 480,
+    "height": 600,
+    "year": null,
+    "camera": "Canon EOS 80D"
+  },
+  "corgi": {
+    "width": 480,
+    "height": 600,
+    "year": null,
+    "camera": "iPhone 17 Pro"
+  },
+  "doorway": {
+    "width": 480,
+    "height": 600,
+    "year": "2026",
+    "camera": "iPhone 17 Pro"
+  },
+  "japan": {
+    "width": 480,
+    "height": 600,
+    "year": "2026",
+    "camera": "iPhone 15 Pro"
+  },
+  "harbor": {
+    "width": 480,
+    "height": 600,
+    "year": null,
+    "camera": null
+  },
+  "aquarium": {
+    "width": 480,
+    "height": 600,
+    "year": "2024",
+    "camera": "iPhone 15 Pro"
+  },
+  "leaves": {
+    "width": 480,
+    "height": 600,
+    "year": null,
+    "camera": null
+  },
+  "red-robe": {
+    "width": 480,
+    "height": 600,
+    "year": null,
+    "camera": null
+  }
+}

@@ -1,177 +1,279 @@
+/* A 90s cable channel guide: deep blue, gold headers, white listings,
+   hairline grid. Everything fits on one screen. */
+
 .show {
-  position: relative;
+  --bg: #0a1250;
+  --cell: #16239a;
+  --cell-hi: #2033c4;
+  --line: #4f63ff;
+  --gold: #ffd23a;
+  --ink: #ffffff;
+
   min-height: 100%;
-  padding: 12vh 16px 16vh;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(120, 30, 30, 0.35), transparent 70%),
-    #0c0a09;
-  color: #ece6dc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 72px 16px 24px;
+  background: radial-gradient(ellipse at 50% 0%, #1a2a9c 0%, var(--bg) 60%, #050a30 100%);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), sans-serif;
 }
 
-.header,
-.episodes,
-.credits {
-  max-width: 820px;
-  margin: 0 auto;
+.guide {
+  width: 100%;
+  max-width: 1180px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 10vh;
+/* ---------- Program info ---------- */
+
+.info {
+  display: flex;
+  gap: 16px;
+  min-height: 172px;
+  padding: 16px 20px;
+  background: linear-gradient(180deg, #13208a, #0d176a);
+  border: 2px solid var(--line);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
-.presents {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.4em;
+.infoMain {
+  flex: 1;
+  min-width: 0;
+}
+
+.infoMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #a2968a;
+  color: var(--gold);
 }
 
-.title {
-  margin-top: 18px;
-  font-family: var(--font-slab), Georgia, serif;
-  font-size: clamp(44px, 9vw, 96px);
+.infoCall {
+  padding: 2px 6px;
+  color: var(--bg);
+  background: var(--gold);
+}
+
+.infoTitle {
+  margin-top: 8px;
+  font-size: clamp(24px, 3.4vw, 36px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.infoRole {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #b9c3ff;
+}
+
+.infoSynopsis {
+  margin-top: 8px;
+  max-width: 72ch;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #e4e8ff;
+}
+
+.infoLink {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 13px;
   font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
+  color: var(--gold);
+  border-bottom: 1px solid currentColor;
 }
 
-.sub {
-  margin-top: 18px;
-  font-family: var(--font-slab), Georgia, serif;
-  font-size: 18px;
+.brand {
+  flex-shrink: 0;
+  align-self: flex-start;
+  text-align: right;
+}
+
+.brandName {
+  font-size: 22px;
+  font-weight: 900;
   font-style: italic;
-  color: #a2968a;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 #000;
 }
 
-.episodes {
-  list-style: none;
-}
-
-.episode {
-  display: grid;
-  grid-template-columns: clamp(64px, 14vw, 120px) 1fr;
-  gap: 8px 24px;
-  padding: 36px 0;
-  border-top: 1px solid rgba(236, 230, 220, 0.12);
-}
-
-.number {
-  font-family: var(--font-slab), Georgia, serif;
-  font-size: clamp(44px, 9vw, 84px);
+.brandSub {
+  font-size: 11px;
   font-weight: 700;
-  line-height: 0.85;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(236, 230, 220, 0.35);
-  transition: color 0.3s, -webkit-text-stroke-color 0.3s;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #b9c3ff;
 }
 
-.episode:hover .number,
-.episode[data-current="true"] .number {
-  color: #ece6dc;
-  -webkit-text-stroke-color: transparent;
+/* ---------- Lineup ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: 96px 112px 1fr;
+  gap: 2px;
+  padding: 2px;
+  border: 2px solid var(--line);
+  background: var(--bg);
+}
+
+.head {
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: #070d3c;
+}
+
+/* Each row spans the three columns but keeps the grid's tracks. */
+.row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  gap: 2px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.row > span {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 10px;
+}
+
+.call {
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  background: linear-gradient(180deg, #2a3fe0, #1a29b0);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.callNum {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.airtime {
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #b9c3ff;
+  background: #0f1a78;
+}
+
+.program {
+  gap: 12px;
+  min-width: 0;
+  background: var(--cell);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.row:hover .program {
+  background: var(--cell-hi);
+}
+
+.row[data-selected="true"] .program,
+.row[data-selected="true"] .airtime {
+  color: var(--bg);
+  background: var(--gold);
+}
+
+.programTitle {
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.programRole {
+  min-width: 0;
+  font-size: 13px;
+  opacity: 0.75;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .live {
-  display: inline-block;
-  margin-bottom: 10px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.3em;
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #ff4d3d;
-  animation: pulse 1.8s ease-in-out infinite;
+  color: #fff;
+  background: #ff3b30;
 }
 
-@keyframes pulse {
-  50% { opacity: 0.45; }
+/* ---------- Footer ---------- */
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 24px;
+  padding: 10px 4px 0;
+  font-size: 13px;
+  color: #dfe4ff;
 }
 
-.epTitle {
-  font-family: var(--font-slab), Georgia, serif;
-  font-size: clamp(26px, 4vw, 36px);
-  font-weight: 700;
-  line-height: 1.05;
-}
-
-.meta {
-  margin-top: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+.footer b {
+  margin-right: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #a2968a;
+  color: var(--gold);
 }
 
-.meta span {
-  margin: 0 0.4em;
-  opacity: 0.5;
+.footer a:hover {
+  text-decoration: underline;
 }
 
-.synopsis {
-  margin-top: 14px;
-  max-width: 58ch;
-  font-size: 17px;
-  line-height: 1.6;
-  color: #cfc7bb;
-}
-
-.credits {
-  margin-top: 6vh;
-  padding-top: 36px;
-  border-top: 1px solid rgba(236, 230, 220, 0.12);
-  text-align: center;
-  font-size: 15px;
-  line-height: 1.9;
-  color: #cfc7bb;
-}
-
-.credits span {
-  margin-right: 12px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: #a2968a;
-}
-
-.credits a:not(.link) {
-  border-bottom: 1px solid rgba(236, 230, 220, 0.3);
-}
-
-.link {
-  display: inline-block;
-  margin-top: 20px;
-  padding-bottom: 2px;
-  border-bottom: 1px solid currentColor;
-  color: #ece6dc;
-}
-
-/* Film grain, so it reads as a different kind of broadcast. */
-.grain {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.08;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  animation: grain 0.6s steps(3) infinite;
-}
-
-@keyframes grain {
-  33% { background-position: 40px -30px; }
-  66% { background-position: -50px 20px; }
-}
-
-@media (max-width: 560px) {
-  .episode {
-    grid-template-columns: 1fr;
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 70px 76px 1fr;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .grain,
-  .live {
-    animation: none;
+  .row > span {
+    padding: 0 7px;
+  }
+
+  .programRole {
+    display: none;
+  }
+
+  .airtime {
+    font-size: 12px;
+  }
+
+  .info {
+    flex-direction: column-reverse;
+    min-height: 0;
+  }
+
+  .brand {
+    text-align: left;
   }
 }

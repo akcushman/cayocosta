@@ -1,55 +1,82 @@
+"use client";
+
+import { useState } from "react";
 import { EMAIL, LINKEDIN } from "@/content/contact";
-import { CREDITS, EPISODES, SERIES_TITLE } from "@/content/story";
+import { EDUCATION, LISTINGS } from "@/content/story";
 import styles from "./BuildingShow.module.css";
 
-// CH 02: a prestige-drama episode guide.
+// CH 02: a 90s cable channel guide. One row per channel (chapter) with its
+// airtime and program; the box up top describes the highlighted listing.
+
 export default function BuildingShow() {
+  const [selected, setSelected] = useState(LISTINGS.length - 1);
+  const show = LISTINGS[selected];
+
   return (
     <div className={styles.show}>
-      <header className={styles.header}>
-        <p className={styles.presents}>An AK Cushman production</p>
-        <h1 className={styles.title}>{SERIES_TITLE}</h1>
-        <p className={styles.sub}>A series in {EPISODES.length} episodes</p>
-      </header>
+      <div className={styles.guide}>
+        <section className={styles.info} aria-live="polite">
+          <div className={styles.infoMain}>
+            <p className={styles.infoMeta}>
+              <span className={styles.infoCall}>{show.callsign}</span>
+              {show.years} · {show.place}
+            </p>
+            <h1 className={styles.infoTitle}>{show.title}</h1>
+            <p className={styles.infoRole}>{show.role}</p>
+            <p className={styles.infoSynopsis}>{show.synopsis}</p>
+            {show.link && (
+              <a className={styles.infoLink} href={show.link.href} target="_blank" rel="noreferrer">
+                {show.link.label} ↗
+              </a>
+            )}
+          </div>
+          <div className={styles.brand}>
+            <p className={styles.brandName}>AK Guide</p>
+            <p className={styles.brandSub}>The story so far</p>
+          </div>
+        </section>
 
-      <ol className={styles.episodes}>
-        {EPISODES.map((ep, i) => (
-          <li key={ep.title} className={styles.episode} data-current={!!ep.current}>
-            <span className={styles.number}>{String(i + 1).padStart(2, "0")}</span>
-            <div className={styles.body}>
-              {ep.current && <span className={styles.live}>● Now airing</span>}
-              <h2 className={styles.epTitle}>{ep.title}</h2>
-              <p className={styles.meta}>
-                {ep.years} <span>·</span> {ep.place} <span>·</span> {ep.role}
-              </p>
-              <p className={styles.synopsis}>{ep.synopsis}</p>
-              {ep.link && (
-                <a className={styles.link} href={ep.link.href} target="_blank" rel="noreferrer">
-                  {ep.link.label} ↗
-                </a>
-              )}
-            </div>
-          </li>
-        ))}
-      </ol>
+        <div className={styles.grid} role="list">
+          <div className={styles.head}>Ch</div>
+          <div className={styles.head}>Airtime</div>
+          <div className={styles.head}>Program</div>
 
-      <footer className={styles.credits}>
-        {CREDITS.map((c) => (
-          <p key={c.label}>
-            <span>{c.label}</span>
-            {c.value}
-          </p>
-        ))}
-        <p>
-          <span>Contact</span>
-          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-        </p>
-        <a className={styles.link} href={LINKEDIN} target="_blank" rel="noreferrer">
-          Full credits on LinkedIn ↗
-        </a>
-      </footer>
+          {LISTINGS.map((l, i) => (
+            <button
+              key={l.callsign}
+              role="listitem"
+              className={styles.row}
+              data-selected={i === selected}
+              onClick={() => setSelected(i)}
+              onMouseEnter={() => setSelected(i)}
+              onFocus={() => setSelected(i)}
+            >
+              <span className={styles.call}>
+                <span className={styles.callNum}>{String(i + 1).padStart(2, "0")}</span>
+                {l.callsign}
+              </span>
+              <span className={styles.airtime}>{l.airtime}</span>
+              <span className={styles.program}>
+                <span className={styles.programTitle}>{l.title}</span>
+                <span className={styles.programRole}>{l.role}</span>
+                {l.live && <span className={styles.live}>Live</span>}
+              </span>
+            </button>
+          ))}
+        </div>
 
-      <div className={styles.grain} aria-hidden />
+        <footer className={styles.footer}>
+          <span>
+            <b>Education</b> {EDUCATION}
+          </span>
+          <a href={`mailto:${EMAIL}`}>
+            <b>Contact</b> {EMAIL}
+          </a>
+          <a href={LINKEDIN} target="_blank" rel="noreferrer">
+            <b>Full credits</b> LinkedIn ↗
+          </a>
+        </footer>
+      </div>
     </div>
   );
 }

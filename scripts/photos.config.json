@@ -1,17 +1,37 @@
 {
-  "source": "~/Desktop/photography",
-  "photos": {
-    "pelicans-at-dusk": "IMG_0160.JPG",
-    "brown-pelican": "124FACE1-1511-4457-870B-571AD92427AF.JPG",
-    "great-blue-heron": "ED6A4F39-9F07-4355-A593-74E88FB25126.JPG",
-    "sailboat-sunset": "9AE6217A-D4C6-4325-A1E6-F2C44703721B.JPG",
-    "gulls-shoreline": "5CB3809F-B891-4893-A846-A9A3A4E0832A.HEIC",
-    "golden-gate": "71A839E9-9078-4D71-A96A-56661FB73116.HEIC",
-    "japanese-garden": "D9F2B7C6-F2FD-4039-989B-77564B859E33.JPG",
-    "lake-and-mountains": "AF81AD2C-E2D6-4090-897C-B31DEDB38674.JPG",
-    "snowy-peaks": "C7801E3A-0C40-4D62-BF9E-D6B60BC468C9.JPG",
-    "peacock": "CE7F594F-9E4A-4BB4-9304-56471932C5A3.JPG",
-    "grey-parrot": "F222C96C-9CED-49D8-B936-FFE37D01F10E.JPG",
-    "bee-on-goldenrod": "0C390C63-E4EF-488E-AA8D-CE978AECA123.JPG"
+  "photography": {
+    "source": "~/Desktop/photography",
+    "out": "public/photos",
+    "manifest": "src/content/photos.generated.json",
+    "photos": {
+      "pelicans-at-dusk": "IMG_0160.JPG",
+      "brown-pelican": "124FACE1-1511-4457-870B-571AD92427AF.JPG",
+      "great-blue-heron": "ED6A4F39-9F07-4355-A593-74E88FB25126.JPG",
+      "sailboat-sunset": "9AE6217A-D4C6-4325-A1E6-F2C44703721B.JPG",
+      "gulls-shoreline": "5CB3809F-B891-4893-A846-A9A3A4E0832A.HEIC",
+      "golden-gate": "71A839E9-9078-4D71-A96A-56661FB73116.HEIC",
+      "japanese-garden": "D9F2B7C6-F2FD-4039-989B-77564B859E33.JPG",
+      "lake-and-mountains": "AF81AD2C-E2D6-4090-897C-B31DEDB38674.JPG",
+      "snowy-peaks": "C7801E3A-0C40-4D62-BF9E-D6B60BC468C9.JPG",
+      "peacock": "CE7F594F-9E4A-4BB4-9304-56471932C5A3.JPG",
+      "grey-parrot": "F222C96C-9CED-49D8-B936-FFE37D01F10E.JPG",
+      "bee-on-goldenrod": "0C390C63-E4EF-488E-AA8D-CE978AECA123.JPG"
+    }
+  },
+  "host": {
+    "source": "~/Desktop/me",
+    "out": "public/host",
+    "manifest": "src/content/host.generated.json",
+    "crop": [480, 600],
+    "photos": {
+      "headshot": "16FC0CFB-D6C1-4263-9A36-F4ACF4120C2D.JPG",
+      "corgi": "E0C69587-EB43-4D96-8422-A5BD41E7DAE0.JPG",
+      "doorway": "91BCF1A8-D144-47B6-8802-1EF513846385.HEIC",
+      "japan": { "file": "BA64E390-C344-4FE7-93C8-BCB553D14309.JPG", "position": "right" },
+      "harbor": "212C78B7-BC3C-437B-BEA1-57ECEAA23A17.HEIC",
+      "aquarium": "67686A77-D956-4DC5-9D86-BC2D88158E26.JPG",
+      "leaves": "08C0A505-AC27-4E9D-8E1A-0ADCCAC8948B.PNG",
+      "red-robe": "AAEF54B9-3B27-469D-96B1-AD788FDF11F4.PNG"
+    }
   }
 }
