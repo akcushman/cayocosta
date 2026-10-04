@@ -8,7 +8,7 @@ export default function Wordmark({ className, kana = true }: { className?: strin
       <span className={styles.latin}>CUSHMAN</span>
       {kana && (
         <span className={styles.kana} lang="ja">
-          カッシュマン
+          クッシュマン
         </span>
       )}
     </span>

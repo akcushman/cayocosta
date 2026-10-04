@@ -100,7 +100,7 @@ export default function PocketTV({ tv }: { tv: TVState }) {
         <div className={styles.badgeRow}>
           <AKLogo className={styles.badge} />
           <span className={styles.spec}>
-            <span lang="ja">カッシュマン</span>
+            <span lang="ja">クッシュマン</span>
             <span>FLAT · TUBE · COLOR</span>
           </span>
         </div>
