@@ -1,16 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { EMAIL } from "@/content/contact";
 import { INTERESTS, type Interest } from "@/content/interests";
 import MusicCredit from "../MusicCredit";
 import styles from "./InterestsShow.module.css";
 
-// CH 04: a game-show board. Every interest on one board, and a spin
-// that lands on today's topic.
+// CH 04: a game-show board of things I love. Spin it and see where it
+// lands; it's just for fun. The bonus tile fills out the 5×3 board.
 
-const BYO: Interest = { name: "& yours?" };
-const TILES: Interest[] = [...INTERESTS, BYO];
+const BONUS: Interest = { name: "★ Bonus ★" };
+const TILES: Interest[] = [...INTERESTS, BONUS];
 
 export default function InterestsShow() {
   const [lit, setLit] = useState<number | null>(null);
@@ -56,9 +55,8 @@ export default function InterestsShow() {
       <header className={styles.header}>
         <p className={styles.kicker}>★ The Big Board ★</p>
         <h1 className={styles.title}>
-          Talk to me
-          <br />
-          about…
+          Things
+          <br />I love
         </h1>
       </header>
 
@@ -70,7 +68,7 @@ export default function InterestsShow() {
                 className={styles.tile}
                 data-lit={lit === i}
                 data-picked={picked === i}
-                data-byo={t === BYO}
+                data-bonus={t === BONUS}
                 onClick={() => pick(i)}
               >
                 <span>{t.name}</span>
@@ -86,11 +84,11 @@ export default function InterestsShow() {
           Spin the board
         </button>
         <p className={styles.result} aria-live="polite">
-          {topic === null && "Things I love — and love to talk about."}
-          {topic === BYO && "Bring your own topic. I'm all ears."}
-          {topic !== null && topic !== BYO && (
+          {topic === null && "Spin the board and see where it lands."}
+          {topic === BONUS && "Bonus round! Spin again."}
+          {topic !== null && topic !== BONUS && (
             <>
-              Today&rsquo;s topic: <strong>{topic.name}</strong>. Let&rsquo;s talk.
+              The board says: <strong>{topic.name}</strong>!
             </>
           )}
         </p>
@@ -99,9 +97,6 @@ export default function InterestsShow() {
             📺 {topic.watch.label} ↗
           </a>
         )}
-        <a className={styles.mail} href={`mailto:${EMAIL}${topic && topic !== BYO ? `?subject=${encodeURIComponent(topic.name)}` : ""}`}>
-          {EMAIL}
-        </a>
         <MusicCredit channel="interests" className={styles.music} />
       </div>
     </div>

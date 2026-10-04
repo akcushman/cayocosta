@@ -120,7 +120,7 @@
   background: linear-gradient(180deg, #2442f0 0%, #1228c0 100%);
 }
 
-.tile[data-byo="true"] span {
+.tile[data-bonus="true"] span {
   color: #fff;
   font-style: italic;
 }
@@ -178,13 +178,6 @@
   color: #dfe4ff;
 }
 
-.mail {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: #ffd75e;
-  border-bottom: 1px solid rgba(255, 215, 94, 0.5);
-}
 
 /* Tiles with a show attached. */
 .tv {

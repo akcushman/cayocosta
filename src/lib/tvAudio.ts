@@ -20,6 +20,11 @@ export class TVAudio {
   private trackGain = 1;
 
   init() {
+    // iPhones mute web audio when the ring/silent switch is on silent,
+    // unless the page declares itself as media playback (Safari 16.4+).
+    const session = (navigator as Navigator & { audioSession?: { type: string } }).audioSession;
+    if (session) session.type = "playback";
+
     if (this.ctx) {
       void this.ctx.resume();
       return;

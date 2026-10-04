@@ -1,4 +1,4 @@
-// CH 04 · Interests — the game-show board. Things I love to talk about.
+// CH 04 · Interests — the game-show board. Things I love.
 // A `watch` link shows up when the board lands on (or you pick) that tile.
 
 export type Interest = { name: string; watch?: { label: string; href: string } };
@@ -20,7 +20,7 @@ export const INTERESTS: Interest[] = [
   { name: "Consciousness" },
   { name: "Media, as a whole" },
   { name: "Relationships & bonds" },
-  { name: "AI as a healthcare companion" },
+  { name: "Boujee specialty grocery stores" },
   { name: "Protecting the mangroves" },
   { name: "Orca whales" },
   { name: "Jazz" },
